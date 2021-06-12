@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 //  imported components
+import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
@@ -11,12 +12,12 @@ export class MainView extends React.Component {
     this.state = {
       movies: [],
       selectedMovie: null,
+      user: null,
     };
   }
-
   componentDidMount() {
     axios
-      .get('https://dashboard.heroku.com/apps/kb-movie-api/movies')
+      .get('https://kb-movie-api.herokuapp.com/movies')
       .then((response) => {
         this.setState({
           movies: response.data,
@@ -30,17 +31,25 @@ export class MainView extends React.Component {
   //  creates and sets newSelectedMovie state for use with onClick button
   //  function
   //  still unsure about this function.  cmd+f search it on cf task 3.3
-  setSelectedMovie(newSelectedMovie) {
+  setSelectedMovie(movie) {
     this.setState({
-      selectedMovie: newSelectedMovie,
+      selectedMovie: movie,
     });
+  }
+
+  //  user login function
+  onLoggedIn(user) {
+    this.setState({ user });
   }
 
   render() {
     const { movies, selectedMovie } = this.state;
 
-    if (movies.length === 0)
-      return <div className="main-view">The list is empty!</div>;
+    //  user not found error
+    if (!user)
+      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+
+    if (movies.length === 0) return <div className="main-view" />;
 
     return (
       <div className="main-view">
@@ -56,9 +65,9 @@ export class MainView extends React.Component {
             <MovieCard
               key={movie._id}
               movie={movie}
-              onMovieClick={(movie) => {
-                this.setSelectedMovie(movie);
-              }}
+              //onMovieClick={(newSelectedMovie) => {
+              //   this.setSelectedMovie(newSelectedMovie);
+              // }}
             />
           ))
         )}
