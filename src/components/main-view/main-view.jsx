@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 //  imported components
+import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -43,7 +44,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user } = this.state;
 
     //  user not found error
     if (!user)
@@ -65,9 +66,9 @@ export class MainView extends React.Component {
             <MovieCard
               key={movie._id}
               movie={movie}
-              //onMovieClick={(newSelectedMovie) => {
-              //   this.setSelectedMovie(newSelectedMovie);
-              // }}
+              onMovieClick={(newSelectedMovie) => {
+                this.setSelectedMovie(newSelectedMovie);
+              }}
             />
           ))
         )}
