@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 export function RegistrationView(props) {
   const [name, setName] = useState('');
@@ -11,58 +14,56 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  axios
+    .post('https://kb-movie-api.herokuapp.com/movies', {
+      Name: name,
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthdate: birthdate,
+    })
+    .then((response) => {
+      const data = response.data;
+      console.log(data);
+      window.open('/', '_self');
+    })
+    .catch((e) => {
+      console.log('The following error occured: ' + e);
+    });
 
   return (
-    <form>
-      <label>
-        Name:
-        <input
-          className="registration-input"
+    <Form>
+      <Form.Group controlId="formName">
+        <Form.Label>Name:</Form.Label>
+        <Form.Control type="text" onChange={(e) => setName(e.target.value)} />
+      </Form.Group>
+      <Form.Group controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        ></input>
-      </label>
-      <label>
-        Username:
-        <input
-          className="registration-input"
-          type="text"
-          value={username}
           onChange={(e) => setUsername(e.target.value)}
-        ></input>
-      </label>
-      <label>
-        Password:
-        <input
-          className="registration-input"
+        />
+      </Form.Group>
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
           type="text"
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
-        ></input>
-      </label>
-      <label>
-        Email:
-        <input
-          className="registration-input"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-      </label>
-      <label>
-        Birthdate:
-        <input
-          className="registration-input"
+        />
+      </Form.Group>
+      <Form.Group controlId="formEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control type="text" onChange={(e) => setEmail(e.target.value)} />
+      </Form.Group>
+      <Form.Group controlId="formBirthdate">
+        <Form.Label>Birthdate</Form.Label>
+        <Form.Control
           type="date"
-          value={birthdate}
           onChange={(e) => setBirthdate(e.target.value)}
-        ></input>
-      </label>
-      <button type="submit" onClick={handleSubmit}>
-        Submit
-      </button>
-    </form>
+        />
+      </Form.Group>
+      <Button variant="secondary" type="submit" onClick={handleSubmit} />
+    </Form>
   );
 }
 

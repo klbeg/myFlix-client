@@ -1,5 +1,16 @@
-$color: steelblue;
+@import url(https://fonts.googleapis.com/css2?family=Montserrat&family=Staatliches&display=swap);
 
-.my-flix {
-  color: $color;
+$light-green: #36b06f;
+$dark-green: #1e392a;
+$light: #e9c893;
+$gray: #828081;
+
+* {
+  font-family: 'montserrat';
+}
+h4 {
+  font-family: 'staatliches';
+}
+.app-container {
+  background-color: #1e392a95;
 }

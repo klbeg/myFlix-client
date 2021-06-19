@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import './login-view.scss';
 
 export function LoginView(props) {
   const [username, setUsername] = useState('');
@@ -9,14 +11,25 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-    props.onLoggedIn(username);
+    axios
+      .post('https://kb-movie-api.herokuapp.com/login', {
+        //  .post('https://localhost:8080/myFlixDb/login', {
+        Username: username,
+        Password: password,
+      })
+      .then((response) => {
+        const data = response.data;
+        props.onLoggedIn(data);
+      })
+      .catch((e) => {
+        console.log('The username you entered does not exist.');
+      });
   };
 
   return (
-    <Form>
+    <Form className="login-view-container">
       <Form.Group controlId="formUsername">
-        <Form.Label>Uwername:</Form.Label>
+        <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
           onChange={(e) => setUsername(e.target.value)}
@@ -29,7 +42,7 @@ export function LoginView(props) {
           onChange={(e) => setPassword(e.target.value)}
         ></Form.Control>
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
+      <Button variant="secondary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
     </Form>
