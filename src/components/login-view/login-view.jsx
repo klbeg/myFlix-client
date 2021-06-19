@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
+import { Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './login-view.scss';
 
 export function LoginView(props) {
@@ -25,26 +27,44 @@ export function LoginView(props) {
         console.log('The username you entered does not exist.');
       });
   };
+  const linkRegister = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <Form className="login-view-container">
       <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
+        <Form.Label className="login-label">Username:</Form.Label>
         <Form.Control
           type="text"
           onChange={(e) => setUsername(e.target.value)}
         />
       </Form.Group>
       <Form.Group controlId="fromPassword">
-        <Form.Label>Password:</Form.Label>
+        <Form.Label className="login-label">Password:</Form.Label>
         <Form.Control
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         ></Form.Control>
       </Form.Group>
-      <Button variant="secondary" type="submit" onClick={handleSubmit}>
+      <Button
+        className="login-view-button"
+        variant="secondary"
+        type="submit"
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
+      <br></br>
+      <Form.Label className="register-label">
+        Don't have an account? Click the link to register.
+      </Form.Label>
+      <br></br>
+      <Link to={'/register'}>
+        <Button className="login-view-button" variant="secondary" type="link">
+          Register
+        </Button>
+      </Link>
     </Form>
   );
 }

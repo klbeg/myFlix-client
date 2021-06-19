@@ -1,3 +1,17 @@
+@use '../../index.scss';
+
+* {
+  color: index.$white;
+}
+
 .login-view-container {
   height: 100vh;
+}
+
+.register-label {
+  padding-top: 15px;
+}
+
+.login-view-button {
+  width: 80px;
 }
