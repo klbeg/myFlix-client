@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
+import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';

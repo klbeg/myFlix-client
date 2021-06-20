@@ -34,14 +34,14 @@ export function LoginView(props) {
   return (
     <Form className="login-view-container">
       <Form.Group controlId="formUsername">
-        <Form.Label className="login-label">Username:</Form.Label>
+        <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
           onChange={(e) => setUsername(e.target.value)}
         />
       </Form.Group>
       <Form.Group controlId="fromPassword">
-        <Form.Label className="login-label">Password:</Form.Label>
+        <Form.Label className="form-label">Password:</Form.Label>
         <Form.Control
           type="password"
           onChange={(e) => setPassword(e.target.value)}
@@ -56,8 +56,8 @@ export function LoginView(props) {
         Submit
       </Button>
       <br></br>
-      <Form.Label className="register-label">
-        Don't have an account? Click the link to register.
+      <Form.Label className="register-link-label">
+        Don't have an account?
       </Form.Label>
       <br></br>
       <Link to={'/register'}>
