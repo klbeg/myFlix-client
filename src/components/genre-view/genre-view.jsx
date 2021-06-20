@@ -6,21 +6,27 @@ import './genre-view.scss';
 
 export class GenreView extends React.Component {
   render() {
-    const { movie, onBackClick } = this.props;
-    console.log(movie);
-
+    const { genre, onBackClick } = this.props;
     return (
-      <Card>
-        <Row>
-          <Col>
-            <Card.Img src={movie.ImagePath} />
-          </Col>
-          <Col>
-            <Card.Title>{movie.Genre.Name}</Card.Title>
-            <Card.Title>{movie.Genre.Description}</Card.Title>
-          </Col>
-        </Row>
-      </Card>
+      <div className="component-container">
+        <Card>
+          <Row>
+            <Col>
+              <Card.Title>{genre.Name}</Card.Title>
+              <Card.Title>{genre.Description}</Card.Title>
+            </Col>
+          </Row>
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => {
+              onBackClick(null);
+            }}
+          >
+            Back
+          </Button>
+        </Card>
+      </div>
     );
   }
 }

@@ -7,20 +7,18 @@ import './director-view.scss';
 
 export class DirectorView extends React.Component {
   render() {
-    const { movie, onBackClick } = this.props;
-    console.log(movie);
+    const { movie, director, onBackClick } = this.props;
+    console.log(director);
 
     return (
-      <div className="form-label">hello hello hello!!!!!!</div>
-      /*   <Card>
-        <Row>
-          <Col>
-            <Card.Img src={movie.ImagePath} />
-          </Col>
-          <Col>
-            <Card.Title>{movie.Director.Name}</Card.Title>
-            <Card.Title>{movie.Director.Bio}</Card.Title>
-          </Col>
+      <div className="component-container">
+        <Card>
+          <Row>
+            <Col>
+              <h2>{director.Name}</h2>
+              <Card.Text>{director.Bio}</Card.Text>
+            </Col>
+          </Row>
           <Button
             variant="secondary"
             type="button"
@@ -30,8 +28,8 @@ export class DirectorView extends React.Component {
           >
             Back
           </Button>
-        </Row>
-          </Card> */
+        </Card>
+      </div>
     );
   }
 }
