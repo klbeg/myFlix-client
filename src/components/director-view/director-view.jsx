@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +10,8 @@ export class DirectorView extends React.Component {
     const { movie, onBackClick } = this.props;
     console.log(movie);
 
-    return {
+    return (
+      <div className="form-label">hello hello hello!!!!!!</div>
       /*   <Card>
         <Row>
           <Col>
@@ -30,6 +32,6 @@ export class DirectorView extends React.Component {
           </Button>
         </Row>
           </Card> */
-    };
+    );
   }
 }

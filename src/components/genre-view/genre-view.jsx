@@ -7,6 +7,7 @@ import './genre-view.scss';
 export class GenreView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
+    console.log(movie);
 
     return (
       <Card>
@@ -15,8 +16,8 @@ export class GenreView extends React.Component {
             <Card.Img src={movie.ImagePath} />
           </Col>
           <Col>
-            <Card.Title>{movie.Director.Name}</Card.Title>
-            <Card.Title>{movie.Director.Bio}</Card.Title>
+            <Card.Title>{movie.Genre.Name}</Card.Title>
+            <Card.Title>{movie.Genre.Description}</Card.Title>
           </Col>
         </Row>
       </Card>
