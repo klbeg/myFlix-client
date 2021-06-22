@@ -28,7 +28,7 @@ export class MainView extends React.Component {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.setState({
-        user: localStorage.getItem('user'),
+        user: JSON.parse(localStorage.getItem('user')),
       });
       this.getMovies(accessToken);
     }
@@ -52,11 +52,11 @@ export class MainView extends React.Component {
   //  user login function
   onLoggedIn(authData) {
     console.log(authData);
-    this.setState({ user: authData.user.Username });
-
+    this.setState({ user: authData.user });
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
+    localStorage.setItem('user', JSON.stringify(authData.user));
     this.getMovies(authData.token);
+    this.getUsers();
   }
 
   //  connect this function to a future logout button
@@ -65,14 +65,13 @@ export class MainView extends React.Component {
   /*
 <button onClick={() => { this.onLoggedOut() }}>Logout</button>
   */
-  onLoggedOut(authData) {
-    console.log(authData);
+  onLoggedOut() {
     this.setState({
-      user: authData.user.Username,
+      user: null,
+      movies: [],
     });
     localStorage.removeItem('token');
     LocalStorage.removeItem('user');
-    this.getMovies(authData.token);
   }
 
   render() {
@@ -146,7 +145,11 @@ export class MainView extends React.Component {
               if (movies.length === 0) return <div className="main-view" />;
               return (
                 <Col md={8}>
-                  <UserView user={user} onBackClick={() => history.goBack()} />
+                  <UserView
+                    movies={movies}
+                    user={user}
+                    onBackClick={() => history.goBack()}
+                  />
                 </Col>
               );
             }}
