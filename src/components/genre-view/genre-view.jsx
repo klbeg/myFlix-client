@@ -12,7 +12,7 @@ export class GenreView extends React.Component {
         <Card>
           <Row>
             <Col>
-              <Card.Title>{genre.Name}</Card.Title>
+              <h2>{genre.Name}</h2>
               <Card.Title>{genre.Description}</Card.Title>
             </Col>
           </Row>
