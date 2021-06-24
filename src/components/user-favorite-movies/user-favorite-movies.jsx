@@ -7,7 +7,7 @@ import './user-favorite-movies.scss';
 
 export class UserFavoriteMovies extends React.Component {
   render() {
-    const { movies } = this.props;
+    const { favMovies } = this.props;
 
     return <div>hello</div>;
   }

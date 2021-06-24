@@ -20,6 +20,7 @@ export class MainView extends React.Component {
     super();
     this.state = {
       movies: [],
+      favMovies: [],
       user: null,
     };
   }
@@ -49,10 +50,24 @@ export class MainView extends React.Component {
       });
   }
 
+  getFavMovies() {
+    let favArr = [];
+    this.state.user.FavoriteMovies.map((favID) => {
+      this.state.movies.map((m) => {
+        if (m._id === favID) {
+          favArr.push(m);
+        }
+      });
+    });
+    return favArr;
+  }
+
   //  user login function
   onLoggedIn(authData) {
     console.log(authData);
-    this.setState({ user: authData.user });
+    this.setState({
+      user: authData.user,
+    });
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(authData.user));
     this.getMovies(authData.token);
@@ -75,21 +90,26 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, favMovies, getFavMovies } = this.state;
     return (
       <Router>
         <Row className="main-view justify-content-md-center">
+          {/* MainView renders either LoginView (if !user) or
+              a list of all movies displayed as MovieCards */}
           <Route
             exact
             path="/"
             render={() => {
+              //  if no user, show LoginView
               if (!user)
                 return (
                   <Col>
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
+              //  if movies = null, show main-view while they load
               if (movies.length === 0) return <div className="main-view" />;
+              //  map movies and return each movie as a 3 col wide MovieCard
               return movies.map((m) => (
                 <Col md={3} key={m._id}>
                   <MovieCard movie={m} />
@@ -148,6 +168,7 @@ export class MainView extends React.Component {
                   <UserView
                     movies={movies}
                     user={user}
+                    getFavMovies={getFavMovies}
                     onBackClick={() => history.goBack()}
                   />
                 </Col>
