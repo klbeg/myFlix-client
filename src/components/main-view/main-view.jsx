@@ -44,34 +44,32 @@ export class MainView extends React.Component {
         this.setState({
           movies: response.data,
         });
+        let favArr = [];
+        this.state.user.FavoriteMovies.map((favID) => {
+          this.state.movies.map((m) => {
+            if (m._id === favID) {
+              favArr.push(m);
+            }
+          });
+        });
+        console.log('fav movies re-set');
+        this.setState({
+          favMovies: [...favArr],
+        });
       })
       .catch(function (e) {
         console.log('The following error occured: ' + e);
       });
   }
 
-  getFavMovies() {
-    let favArr = [];
-    this.state.user.FavoriteMovies.map((favID) => {
-      this.state.movies.map((m) => {
-        if (m._id === favID) {
-          favArr.push(m);
-        }
-      });
-    });
-    return favArr;
-  }
-
   //  user login function
   onLoggedIn(authData) {
-    console.log(authData);
     this.setState({
       user: authData.user,
     });
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(authData.user));
     this.getMovies(authData.token);
-    this.getUsers();
   }
 
   //  connect this function to a future logout button
@@ -168,7 +166,7 @@ export class MainView extends React.Component {
                   <UserView
                     movies={movies}
                     user={user}
-                    getFavMovies={getFavMovies}
+                    favMovies={favMovies}
                     onBackClick={() => history.goBack()}
                   />
                 </Col>

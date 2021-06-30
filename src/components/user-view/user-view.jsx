@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-import { UserFavoriteMovies } from '../user-favorite-movies/user-favorite-movies';
+import { MovieCard } from '../movie-card/movie-card';
 
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -10,71 +10,112 @@ import { match } from 'micromatch';
 
 import './user-view.scss';
 
-export class UserView extends React.Component {
+export class UserView extends Component {
   constructor() {
     super();
     this.state = {
       user: null,
       movies: [],
-      favMovies: [],
+      disableForm: 'disabled',
     };
   }
 
-  componentDidMount() {
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.setState({
-        user: JSON.parse(localStorage.getItem('user')),
-      });
-      this.getMovies(accessToken);
-    }
-  }
-
-  getMovies(token) {
-    axios
-      .get('https://kb-movie-api.herokuapp.com/movies', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        this.setState({
-          movies: response.data,
-        });
-      })
-      .then(() => {
-        this.getFavTitles();
-      })
-      .catch(function (e) {
-        console.log('The following error occured: ' + e);
-      });
-  }
-
-  getFavTitles() {
-    let favArr = [];
-    this.state.user.FavoriteMovies.map((favID) => {
-      this.state.movies.map((m) => {
-        if (m._id === favID) {
-          favArr.push(m.Title);
-        }
-      });
+  enableForm() {
+    console.log('enableform');
+    this.setState({
+      disableForm: '',
     });
-    return favArr;
+  }
+
+  onSaveChanges() {
+    //  still needs axios put request
+    this.setState({
+      disableForm: 'disabled',
+    });
+  }
+
+  onDeleteFavorite(movie) {
+    console.log('delete favorite movie: ', movie.Title);
+  }
+
+  onDeleteAccount() {
+    console.log('delete account');
   }
 
   render() {
-    const { user, onBackClick, getFavMovies } = this.props;
-    console.log('user-render: ' + getFavMovies);
+    const { user, onBackClick, favMovies } = this.props;
     return (
-      <Row>
-        <Col>
-          <Card.Body>
-            <h2>User Info:</h2>
-            <Card.Text>Name: {user.Name}</Card.Text>
-            <Card.Text>Username: {user.Username}</Card.Text>
-            <Card.Text>Email: {user.Email}</Card.Text>
-            <Card.Text>Birthdate: {user.Birthdate} </Card.Text>
-          </Card.Body>
-        </Col>
-      </Row>
+      <>
+        <Row>
+          <Col>
+            <Card.Body>
+              <h2>User Info:</h2>
+              <Card.Text>
+                Name:
+                <input
+                  id="name"
+                  type="text"
+                  value={user.Name}
+                  disabled={this.state.disableForm}
+                ></input>
+              </Card.Text>
+              <Card.Text>
+                Username:
+                <input
+                  id="username"
+                  type="text"
+                  value={user.Username}
+                  disabled={this.state.disableForm}
+                ></input>
+              </Card.Text>
+              <Card.Text>
+                Email:
+                <input
+                  id="email"
+                  type="text"
+                  value={user.Email}
+                  disabled={this.state.disableForm}
+                ></input>
+              </Card.Text>
+              <Card.Text>
+                Birthdate:
+                <input
+                  id="birthdate"
+                  type="text"
+                  value={user.Birthdate.slice(0, 10)}
+                  disabled={this.state.disableForm}
+                ></input>
+              </Card.Text>
+              <Card.Text>
+                <button type="button" onClick={() => this.enableForm()}>
+                  Edit Info
+                </button>
+                <button type="button" onClick={() => this.onSaveChanges()}>
+                  Save Updates
+                </button>
+                <button type="button" onClick={() => this.onDeleteAccount()}>
+                  Delete Account
+                </button>
+              </Card.Text>
+            </Card.Body>
+          </Col>
+        </Row>
+        <Row>
+          {this.props.favMovies.map((favMovie) => {
+            return (
+              <Col md={3}>
+                <MovieCard movie={favMovie} key={favMovie._id} />
+                <button
+                  type="button"
+                  onClick={() => this.onDeleteFavorite(favMovie)}
+                >
+                  Delete Favorite
+                </button>
+              </Col>
+            );
+          })}
+        </Row>
+      </>
     );
   }
 }
