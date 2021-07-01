@@ -25,6 +25,9 @@ export class MainView extends React.Component {
     };
   }
 
+  //  on componentMount get localStorage.token
+  //  set state.user to logged in user
+  //  call getMovies and pass access token
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
@@ -35,6 +38,9 @@ export class MainView extends React.Component {
     }
   }
 
+  //  get's movies from API w/token auth, set's state.movies to movies
+  //  uses state.movies to get movie objects for user.FavoriteMovies
+  //  sets state.favMovies to FavoriteMovie objects
   getMovies(token) {
     axios
       .get('https://kb-movie-api.herokuapp.com/movies', {
@@ -52,9 +58,15 @@ export class MainView extends React.Component {
             }
           });
         });
-        console.log('fav movies re-set');
+        let favMovTemp = [];
+        favArr.map((favMovie) => {
+          let favMovArr = Object.entries(favMovie);
+          favMovArr.push(['deleted', false]);
+          favMovie = Object.fromEntries(favMovArr);
+          favMovTemp.push(favMovie);
+        });
         this.setState({
-          favMovies: [...favArr],
+          favMovies: [...favMovTemp],
         });
       })
       .catch(function (e) {
@@ -62,7 +74,8 @@ export class MainView extends React.Component {
       });
   }
 
-  //  user login function
+  //  onLogin set state.user to logged in user
+  //  saves the user and auth token in local storage
   onLoggedIn(authData) {
     this.setState({
       user: authData.user,
@@ -72,28 +85,24 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  //  connect this function to a future logout button
-  //  this button should go in a future header component
-  //  the following is the code for said button
-  /*
-<button onClick={() => { this.onLoggedOut() }}>Logout</button>
-  */
+  //  on Log Out reset state.(user, movies) to (null, [])
+  //  remove token and user from localStorage
   onLoggedOut() {
     this.setState({
       user: null,
       movies: [],
     });
     localStorage.removeItem('token');
-    LocalStorage.removeItem('user');
+    localStorage.removeItem('user');
   }
 
   render() {
-    const { movies, user, favMovies, getFavMovies } = this.state;
+    const { movies, user, favMovies, getMovies } = this.state;
     return (
       <Router>
         <Row className="main-view justify-content-md-center">
-          {/* MainView renders either LoginView (if !user) or
-              a list of all movies displayed as MovieCards */}
+          {/* MainView renders LoginView (if !user) -or- */}
+          {/* a list of all movies displayed as MovieCards */}
           <Route
             exact
             path="/"
@@ -116,6 +125,7 @@ export class MainView extends React.Component {
             }}
           />
 
+          {/* RegistrationView */}
           <Route
             exact
             path="/register"
@@ -129,6 +139,7 @@ export class MainView extends React.Component {
             }}
           ></Route>
 
+          {/* MovieView */}
           <Route
             path="/movies/:movieId"
             render={({ match, history }) => {
@@ -150,6 +161,7 @@ export class MainView extends React.Component {
             }}
           />
 
+          {/* UserView */}
           <Route
             exact
             path="/users/:username"
@@ -174,6 +186,7 @@ export class MainView extends React.Component {
             }}
           />
 
+          {/* GenreView */}
           <Route
             exact
             path="/genres/:name"
@@ -199,6 +212,7 @@ export class MainView extends React.Component {
             }}
           />
 
+          {/* DirectorView */}
           <Route
             exact
             path="/directors/:name"
