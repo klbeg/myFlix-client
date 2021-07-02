@@ -71,12 +71,14 @@ export class UserView extends Component {
   //  deletefavoritemovies
   onDeleteFavorite(movie, user) {
     movie.deleted = true;
-    axios.delete(
-      'https://kb-movie-api.herokuapp.com/users/testuser1/movies/60a45ab9e8fd876d8ae55926',
-      {
-        headers: { Authorization: `Bearer ${this.state.token}` },
-      }
-    );
+    axios
+      .delete(
+        'https://kb-movie-api.herokuapp.com/users/testuser1/movies/60a45ab9e8fd876d8ae55926',
+        {
+          headers: { Authorization: `Bearer ${this.state.token}` },
+        }
+      )
+      .then(() => this.props.getMovies(this.state.token));
     alert(
       `${movie.Title} was deleted from ${user.Username}'s favorite movies.`
     );
@@ -98,7 +100,7 @@ export class UserView extends Component {
       <>
         <Row>
           <Col>
-            <Card.Body>
+            <Card.Body className="user-info">
               <h2>User Info:</h2>
               <Card.Text>
                 Name:

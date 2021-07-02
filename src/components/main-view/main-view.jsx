@@ -3,8 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Row, Col, Container } from 'react-bootstrap';
 import { match } from 'micromatch';
 
 import { Header } from '../header/header';
@@ -24,6 +23,8 @@ export class MainView extends React.Component {
       favMovies: [],
       user: null,
     };
+    this.onLoggedOut = this.onLoggedOut.bind(this);
+    this.getMovies = this.getMovies.bind(this);
   }
 
   //  on componentMount get localStorage.token
@@ -67,12 +68,13 @@ export class MainView extends React.Component {
           favMovTemp.push(favMovie);
         });
         this.setState({
-          favMovies: [...favMovTemp],
+          favMovies: favMovTemp,
         });
       })
       .catch(function (e) {
         console.log('The following error occured: ' + e);
       });
+    console.log('get movies has completed');
   }
 
   //  onLogin set state.user to logged in user
@@ -99,10 +101,11 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, user, favMovies } = this.state;
+    const { onLoggedOut } = this.props;
     return (
       <Router>
         <Row>
-          <Header user={user} />
+          <Header user={user} onLogOut={this.onLoggedOut} />
         </Row>
 
         <Row className="main-view justify-content-md-center">
@@ -184,6 +187,7 @@ export class MainView extends React.Component {
                     movies={movies}
                     user={user}
                     favMovies={favMovies}
+                    getMovies={this.getMovies}
                     onBackClick={() => history.goBack()}
                   />
                 </Col>

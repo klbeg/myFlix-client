@@ -1,3 +1,9 @@
+@use '../../index.scss';
+
 .deleted-favorite {
   display: none;
+}
+
+.user-info {
+  background-color: index.$white;
 }
