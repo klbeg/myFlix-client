@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Row, Button, Col, Card } from 'react-bootstrap';
+import { UserView } from '../user-view/user-view';
+import './header.scss';
 
 export class Header extends Component {
   render() {
-    return (
-      <div>
-        <Col>
-          <h1>myFlix Movie Database</h1>
-        </Col>
-      </div>
-    );
+    return <Col className="header-element">hello</Col>;
   }
 }
 

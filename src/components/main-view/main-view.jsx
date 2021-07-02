@@ -3,7 +3,11 @@ import React from 'react';
 import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { match } from 'micromatch';
 
+import { Header } from '../header/header';
 import { UserView } from '../user-view/user-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
@@ -11,9 +15,6 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { match } from 'micromatch';
 
 export class MainView extends React.Component {
   constructor() {
@@ -97,9 +98,13 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user, favMovies, getMovies } = this.state;
+    const { movies, user, favMovies } = this.state;
     return (
       <Router>
+        <Row>
+          <Header user={user} />
+        </Row>
+
         <Row className="main-view justify-content-md-center">
           {/* MainView renders LoginView (if !user) -or- */}
           {/* a list of all movies displayed as MovieCards */}
