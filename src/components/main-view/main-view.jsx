@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import { match } from 'micromatch';
 
+import { host } from '../../config';
 import { Header } from '../header/header';
 import { UserView } from '../user-view/user-view';
 import { DirectorView } from '../director-view/director-view';
@@ -45,7 +46,7 @@ export class MainView extends React.Component {
   //  sets state.favMovies to FavoriteMovie objects
   getMovies(token) {
     axios
-      .get('https://kb-movie-api.herokuapp.com/movies', {
+      .get(host + '/movies', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {

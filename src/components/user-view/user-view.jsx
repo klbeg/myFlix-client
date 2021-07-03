@@ -52,7 +52,7 @@ export class UserView extends Component {
 
   onSaveChanges(username) {
     axios
-      .put(`https://kb-movie-api.herokuapp.com/users/${username}`, {
+      .put(host + `/users/${username}`, {
         headers: { Authorization: `Bearer ${this.state.token}` },
         Name: this.state.name,
       })
@@ -71,14 +71,9 @@ export class UserView extends Component {
   //  deletefavoritemovies
   onDeleteFavorite(movie, user) {
     movie.deleted = true;
-    axios
-      .delete(
-        'https://kb-movie-api.herokuapp.com/users/testuser1/movies/60a45ab9e8fd876d8ae55926',
-        {
-          headers: { Authorization: `Bearer ${this.state.token}` },
-        }
-      )
-      .then(() => this.props.getMovies(this.state.token));
+    axios.delete(host + '/users/testuser1/movies/60a45ab9e8fd876d8ae55926', {
+      headers: { Authorization: `Bearer ${this.state.token}` },
+    });
     alert(
       `${movie.Title} was deleted from ${user.Username}'s favorite movies.`
     );
@@ -86,7 +81,7 @@ export class UserView extends Component {
 
   onDeleteAccount(username) {
     console.log(username);
-    axios.delete(`https://kb-movie-api.herokuapp.com/users/${username}`, {
+    axios.delete(host + `/users/${username}`, {
       headers: { Authorization: `Bearer ${this.state.token}` },
     });
     localStorage.removeItem('token');

@@ -16,7 +16,7 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('https://kb-movie-api.herokuapp.com/users', {
+      .post(host + '/users', {
         Name: name,
         Username: username,
         Password: password,

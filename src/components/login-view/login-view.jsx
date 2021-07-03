@@ -13,7 +13,7 @@ export function LoginView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('https://kb-movie-api.herokuapp.com/login', {
+      .post(host + '/login', {
         //  .post('https://localhost:8080/myFlixDb/login', {
         Username: username,
         Password: password,
