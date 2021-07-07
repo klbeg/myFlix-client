@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import './user-view.scss';
 
+import { host } from '../../config';
+
 import { MovieCard } from '../movie-card/movie-card';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -15,10 +17,10 @@ export class UserView extends Component {
     super();
     this.state = {
       disableForm: 'disabled',
-      name: '',
-      username: '',
-      birthdate: '',
-      email: '',
+      name: undefined,
+      username: undefined,
+      birthdate: undefined,
+      email: undefined,
       token: '',
     };
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -52,10 +54,24 @@ export class UserView extends Component {
 
   onSaveChanges(username) {
     axios
-      .put(host + `/users/${username}`, {
-        headers: { Authorization: `Bearer ${this.state.token}` },
-        Name: this.state.name,
-      })
+      .put(
+        host + `/users/${username}`,
+        {
+          Name: this.state.name ? this.state.name : this.props.user.Name,
+          /* Username: this.state.username
+            ? this.state.username
+            : this.props.user.Username,
+          Email: this.state.email ? this.state.email : this.props.user.Email,
+          //  password will need to be different than all other fields
+          //  maybe part of it's own update?
+          Password: this.state.password
+            ? this.state.password
+            : this.props.user.Password, */
+        },
+        {
+          headers: { Authorization: `Bearer ${this.state.token}` },
+        }
+      )
       .then((response) => {
         console.log(response);
       })

@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
+import { host } from '../../config';
+
 import './registration-view.scss';
 
 export function RegistrationView(props) {
