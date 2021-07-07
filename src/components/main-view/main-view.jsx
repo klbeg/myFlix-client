@@ -25,7 +25,6 @@ export class MainView extends React.Component {
       user: null,
     };
     this.onLoggedOut = this.onLoggedOut.bind(this);
-    this.getMovies = this.getMovies.bind(this);
   }
 
   //  on componentMount get localStorage.token
@@ -53,29 +52,41 @@ export class MainView extends React.Component {
         this.setState({
           movies: response.data,
         });
-        let favArr = [];
-        this.state.user.FavoriteMovies.map((favID) => {
-          this.state.movies.map((m) => {
-            if (m._id === favID) {
-              favArr.push(m);
-            }
-          });
-        });
-        let favMovTemp = [];
-        favArr.map((favMovie) => {
-          let favMovArr = Object.entries(favMovie);
-          favMovArr.push(['deleted', false]);
-          favMovie = Object.fromEntries(favMovArr);
-          favMovTemp.push(favMovie);
-        });
-        this.setState({
-          favMovies: favMovTemp,
-        });
+        this.populateFavMovies();
       })
       .catch(function (e) {
         console.log('The following error occured: ' + e);
       });
     console.log('get movies has completed');
+  }
+
+  populateFavMovies() {
+    let favArr = [];
+    this.state.user.FavoriteMovies.map((favID) => {
+      this.state.movies.map((m) => {
+        if (m._id === favID) {
+          favArr.push(m);
+        }
+      });
+    });
+    let favMovTemp = [];
+    favArr.map((favMovie) => {
+      let favMovArr = Object.entries(favMovie);
+      favMovArr.push(['deleted', false]);
+      favMovie = Object.fromEntries(favMovArr);
+      favMovTemp.push(favMovie);
+    });
+    this.setState({
+      favMovies: favMovTemp,
+    });
+  }
+
+  //  will be used to update user from UserView
+  //  as well as update favMovies
+  //  will require get.user endpoint in movie-api to change
+  //  or, create alternate endpoint.
+  setAndUpdateUser() {
+    axios.get(host + 'users/${user._id}', {});
   }
 
   //  onLogin set state.user to logged in user
