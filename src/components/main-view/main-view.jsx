@@ -46,17 +46,7 @@ export class MainView extends React.Component {
   //  last, sets newUsername in localStorage to ''.
   componentDidUpdate() {
     console.log('main-view updated');
-    if (localStorage.newUsername) {
-      let newUsername = localStorage.newUsername;
-      axios.get(host + `/users/${newUsername}`).then((response) => {
-        this.setState({
-          user: response.data,
-        });
-        localStorage.setItem('user', JSON.stringify(response.data));
-        this.populateFavMovies();
-      });
-      //  checks
-    } else if (localStorage.changes) {
+    if (localStorage.changes) {
       console.log('changes is true');
       axios
         .get(host + `/users/${this.state.user.Username}`)

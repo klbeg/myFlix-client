@@ -18,6 +18,7 @@ export class UserView extends Component {
     this.state = {
       token: '',
       disableForm: 'disabled',
+      disableUpdatePassword: 'disabled',
       name: '',
       username: '',
       birthdate: '',
@@ -25,6 +26,7 @@ export class UserView extends Component {
       password: '',
       valPassword: '',
       errors: {},
+      passErrors: {},
     };
     this.handleUserInput = this.handleUserInput.bind(this);
   }
@@ -33,6 +35,12 @@ export class UserView extends Component {
     console.log('enableform');
     this.setState({
       disableForm: '',
+    });
+  }
+
+  enablePasswordUpdate() {
+    this.setState({
+      disableUpdatePassword: '',
     });
   }
 
@@ -46,6 +54,14 @@ export class UserView extends Component {
     console.log('user-view updated!');
   }
 
+  componentWillMount() {
+    this.setState({
+      birthdate: this.props.user.Birthdate,
+      name: this.props.user.Name,
+      email: this.props.user.Email,
+    });
+  }
+
   componentDidMount() {
     console.log('UserView mounted');
     this.setState({
@@ -56,40 +72,18 @@ export class UserView extends Component {
   //  Input validation for update user form
   userUpdateValidation() {
     console.log('userUpdateValidation being called');
-    const { name, username, email, password, valPassword } = this.state;
+    const { name, username, email } = this.state;
     let isValid = true;
     const errors = {};
     if (name) {
-      if (!/^[a-z]+$/i.test(name)) {
+      if (!/^[a-z ]+$/i.test(name)) {
         errors.nameContent = 'Name may contain letters only.';
-        isValid = false;
-      }
-    }
-    if (username) {
-      if (username.length <= 5) {
-        errors.usernameLength = 'Username must be 5 or more characters.';
-        isValid = false;
-      }
-      if (!/^[a-z0-9 ]+$/i.test(username)) {
-        errors.usernameContent =
-          'Username may only contain alphanumeric characters.';
         isValid = false;
       }
     }
     if (email) {
       if (!/[@]/g.test(email)) {
         errors.emailNotValid = 'Email must be valid email.';
-        isValid = false;
-      }
-    }
-    if (password && valPassword) {
-      if (password.length < 7) {
-        errors.passwordLength =
-          'Passwords must be at least 8 characters in length.';
-        isValid = false;
-      }
-      if (password !== valPassword) {
-        errors.passwordsMustMatch = 'Both passwords must match';
         isValid = false;
       }
     }
@@ -111,13 +105,7 @@ export class UserView extends Component {
           host + `/users/${username}`,
           {
             Name: this.state.name ? this.state.name : this.props.user.Name,
-            Username: this.state.username
-              ? this.state.username
-              : this.props.user.Username,
             Email: this.state.email ? this.state.email : this.props.user.Email,
-            // Password: this.state.password
-            //   ? this.state.password
-            //   : this.props.user.Password,
             Birthdate: this.state.birthdate
               ? this.state.birthdate
               : this.props.user.Birthdate.slice(0, 10),
@@ -126,6 +114,14 @@ export class UserView extends Component {
             headers: { Authorization: `Bearer ${this.state.token}` },
           }
         )
+        .then((response) => {
+          console.log(response);
+          if ((response.statusText = 'ok')) {
+            this.setState({
+              birthdate: response.data.Birthdate,
+            });
+          }
+        })
         .catch((e) => {
           console.log('the following error occured onSavedChanges: ', e);
         });
@@ -135,6 +131,56 @@ export class UserView extends Component {
       });
       localStorage.setItem('changes', 'pending-changes');
     }
+  }
+
+  newPasswordValidation() {
+    const { password, valPassword } = this.state;
+    const passErrors = {};
+    let isValidPass = true;
+    if (!password) {
+      passErrors.passwordIsRequired = 'Password field is required';
+      isValidPass = false;
+    }
+    if (password && valPassword) {
+      if (password.length < 7) {
+        passErrors.passwordLength =
+          'Passwords must be at least 8 characters in length.';
+        isValidPass = false;
+      }
+      if (password !== valPassword) {
+        passErrors.passwordsMustMatch = 'Both passwords must match';
+        isValidPass = false;
+      }
+    }
+    this.setState({
+      passErrors: passErrors,
+      password: '',
+      valPassword: '',
+    });
+    return isValidPass;
+  }
+
+  onSavePassword(username) {
+    const isValidPass = this.newPasswordValidation();
+
+    if (isValidPass) {
+      axios
+        .put(
+          host + `/users/${username}/changePass`,
+          {
+            Password: this.state.password,
+          },
+          {
+            headers: { Authorization: `Bearer ${this.state.token}` },
+          }
+        )
+        .catch((e) => {
+          console.log('the following error occured onSavedChanges: ', e);
+        });
+    }
+    this.setState({
+      disableUpdatePassword: 'disabled',
+    });
   }
 
   //  deletefavoritemovies
@@ -172,21 +218,9 @@ export class UserView extends Component {
                 <input
                   name="name"
                   type="text"
-                  placeholder={user.Name}
                   value={this.state.name}
                   disabled={this.state.disableForm}
                   ref="searchStringInput"
-                  onChange={this.handleUserInput}
-                ></input>
-              </Card.Text>
-              <Card.Text>
-                Username:{' '}
-                <input
-                  name="username"
-                  type="text"
-                  value={this.state.username}
-                  placeholder={user.Username}
-                  disabled={this.state.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
@@ -196,29 +230,14 @@ export class UserView extends Component {
                   name="email"
                   type="text"
                   value={this.state.email}
-                  placeholder={user.Email}
                   disabled={this.state.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
               <Card.Text>
-                Change Password:{' '}
-                <input
-                  name="password"
-                  type="password"
-                  placeholder="Enter new password"
-                  disabled={this.state.disableForm}
-                  onChange={this.handleUserInput}
-                ></input>
-                <input
-                  name="valPassword"
-                  type="password"
-                  placeholder="Re-enter new password"
-                  disabled={this.state.disableForm}
-                  onChange={this.handleUserInput}
-                ></input>
+                Birthdate: {this.state.birthdate.slice(0, 10)}
               </Card.Text>
-              <Card.Text>Birthdate: {user.Birthdate.slice(0, 10)}</Card.Text>
+              {/*  <Card.Text>Birthdate: {user.Birthdate.slice(0, 10)}</Card.Text> */}
               <Card.Text>
                 <input
                   name="birthdate"
@@ -237,23 +256,64 @@ export class UserView extends Component {
                 })}
               </div>
               <Card.Text>
-                <button type="button" onClick={() => this.enableForm()}>
+                <Button type="button" onClick={() => this.enableForm()}>
                   {' '}
                   Edit
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
                   onClick={() => this.onSaveChanges(user.Username)}
                 >
                   Save Updates
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
                   onClick={() => this.onDeleteAccount(user.Username)}
                 >
                   Delete Account
-                </button>
+                </Button>
               </Card.Text>
+              <Card.Text>
+                Change Password:{' '}
+                <input
+                  name="password"
+                  type="password"
+                  placeholder="Enter new password"
+                  disabled={this.state.disableUpdatePassword}
+                  onChange={this.handleUserInput}
+                ></input>
+              </Card.Text>
+              <Card.Text>
+                Confirm New Password:
+                <input
+                  name="valPassword"
+                  type="password"
+                  placeholder="Enter new password"
+                  disabled={this.state.disableUpdatePassword}
+                  onChange={this.handleUserInput}
+                ></input>
+              </Card.Text>
+              <div>
+                {Object.values(this.state.passErrors).map((value) => {
+                  return (
+                    <div className="display-errors" key={value}>
+                      {value}
+                    </div>
+                  );
+                })}
+              </div>
+              <Col>
+                <Button
+                  type="button"
+                  onClick={() => this.enablePasswordUpdate()}
+                >
+                  {' '}
+                  Change Password
+                </Button>
+                <Button onClick={() => this.onSavePassword(user.Username)}>
+                  Save Password
+                </Button>
+              </Col>
               <Col>
                 <Button
                   variant="secondary"
@@ -293,19 +353,4 @@ export class UserView extends Component {
       </>
     );
   }
-}
-
-{
-  /*  Old version of birthdate update
- <Card.Text>
-  Birthdate:{' '}
-  <input
-    name="birthdate"
-    type="text"
-    value={this.state.birthdate}
-    placeholder={user.Birthdate}
-    disabled={this.state.disableForm}
-    onChange={this.handleUserInput}
-  ></input>
-</Card.Text> */
 }
