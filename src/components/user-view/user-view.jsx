@@ -53,6 +53,7 @@ export class UserView extends Component {
     });
   }
 
+  //  Input validation for update user form
   userUpdateValidation() {
     console.log('userUpdateValidation being called');
     const { name, username, email, password, valPassword } = this.state;
@@ -82,7 +83,7 @@ export class UserView extends Component {
       }
     }
     if (password && valPassword) {
-      if (password.length < 8) {
+      if (password.length < 7) {
         errors.passwordLength =
           'Passwords must be at least 8 characters in length.';
         isValid = false;
@@ -92,6 +93,9 @@ export class UserView extends Component {
         isValid = false;
       }
     }
+    this.setState({
+      errors: errors,
+    });
     return isValid;
   }
 
@@ -156,6 +160,7 @@ export class UserView extends Component {
 
   render() {
     const { user, onBackClick, favMovies } = this.props;
+    console.log(Object.values(this.state.errors));
     return (
       <>
         <Row>
@@ -222,6 +227,15 @@ export class UserView extends Component {
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
+              <div>
+                {Object.values(this.state.errors).map((value) => {
+                  return (
+                    <div className="display-errors" key={value}>
+                      {value}
+                    </div>
+                  );
+                })}
+              </div>
               <Card.Text>
                 <button type="button" onClick={() => this.enableForm()}>
                   {' '}

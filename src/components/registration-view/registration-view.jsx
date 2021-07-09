@@ -14,25 +14,87 @@ export function RegistrationView(props) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState(0000 - 00 - 00);
+  const [errors, setErrors] = useState({});
+
+  //  Input validation for registration form
+  userUpdateValidation = () => {
+    console.log('userUpdateValidation being called');
+
+    let isValid = true;
+    const errors = {};
+
+    if (!name) {
+      errors.nameIsRequired = 'Name is a required field';
+      isValid = false;
+    }
+    if (!/^[a-z ]*$/i.test(name)) {
+      errors.nameContent = 'Name may contain letters only.';
+      isValid = false;
+    }
+    if (!username) {
+      errors.usernameIsRequired = 'Username is a required field.';
+      isValid = false;
+    } else {
+      if (username.length <= 5) {
+        errors.usernameLength = 'Username must be 5 or more characters.';
+        isValid = false;
+      }
+      if (!/^[a-z0-9]+$/i.test(username)) {
+        errors.usernameContent =
+          'Username may only contain alphanumeric characters.';
+        isValid = false;
+      }
+    }
+    if (!password) {
+      errors.passwordIsRequired = 'Password is a required field.';
+      isValid = false;
+    } else {
+      if (password.length < 7) {
+        errors.passwordLength = 'Passwords must be 7 or more characters.';
+        isValid = false;
+      }
+    }
+    if (!email) {
+      errors.emailIsRequired = 'Email is a required field.';
+      isValid = false;
+    } else {
+      if (!/[@]/g.test(email)) {
+        errors.emailNotValid = 'Email must be valid email.';
+        isValid = false;
+      }
+    }
+    if (!birthdate) {
+      errors.birthdateIsRequired = 'Birthdate is a required field.';
+      isValid = false;
+    }
+
+    console.log(errors);
+    setErrors(errors);
+    return isValid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(host + '/users', {
-        Name: name,
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthdate: birthdate,
-      })
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-        window.open('/', '_self');
-      })
-      .catch((e) => {
-        console.log('The following error occured: ' + e);
-      });
+    const isValid = this.userUpdateValidation();
+
+    if (isValid) {
+      axios
+        .post(host + '/users', {
+          Name: name,
+          Username: username,
+          Password: password,
+          Email: email,
+          Birthdate: birthdate,
+        })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          window.open('/', '_self');
+        })
+        .catch((e) => {
+          console.log('The following error occured: ' + e);
+        });
+    }
   };
 
   return (
@@ -69,10 +131,17 @@ export function RegistrationView(props) {
       <Button variant="secondary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
+      {Object.values(errors).map((value) => {
+        return (
+          <div className="display-errors" key={value}>
+            {value}
+          </div>
+        );
+      })}
     </Form>
   );
 }
-
+/*
 RegistrationView.propTypes = {
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
@@ -80,3 +149,4 @@ RegistrationView.propTypes = {
   email: PropTypes.string.isRequired,
   birthdate: PropTypes.instanceOf(Date),
 };
+*/
