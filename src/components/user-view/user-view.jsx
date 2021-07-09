@@ -16,12 +16,15 @@ export class UserView extends Component {
   constructor() {
     super();
     this.state = {
-      disableForm: 'disabled',
-      name: undefined,
-      username: undefined,
-      birthdate: undefined,
-      email: undefined,
       token: '',
+      disableForm: 'disabled',
+      name: '',
+      username: '',
+      birthdate: '',
+      email: '',
+      password: '',
+      valPassword: '',
+      errors: {},
     };
     this.handleUserInput = this.handleUserInput.bind(this);
   }
@@ -30,7 +33,6 @@ export class UserView extends Component {
     console.log('enableform');
     this.setState({
       disableForm: '',
-      deletedFavorite: 'deleted-favorite',
     });
   }
 
@@ -41,7 +43,7 @@ export class UserView extends Component {
   }
 
   componentDidUpdate() {
-    console.log('updated!');
+    console.log('user-view updated!');
   }
 
   componentDidMount() {
@@ -49,50 +51,97 @@ export class UserView extends Component {
     this.setState({
       token: localStorage.getItem('token'),
     });
-    //console.log(localStorage.getItem('token'));
+  }
+
+  userUpdateValidation() {
+    console.log('userUpdateValidation being called');
+    const { name, username, email, password, valPassword } = this.state;
+    let isValid = true;
+    const errors = {};
+    if (name) {
+      if (!/^[a-z]+$/i.test(name)) {
+        errors.nameContent = 'Name may contain letters only.';
+        isValid = false;
+      }
+    }
+    if (username) {
+      if (username.length <= 5) {
+        errors.usernameLength = 'Username must be 5 or more characters.';
+        isValid = false;
+      }
+      if (!/^[a-z0-9 ]+$/i.test(username)) {
+        errors.usernameContent =
+          'Username may only contain alphanumeric characters.';
+        isValid = false;
+      }
+    }
+    if (email) {
+      if (!/[@]/g.test(email)) {
+        errors.emailNotValid = 'Email must be valid email.';
+        isValid = false;
+      }
+    }
+    if (password && valPassword) {
+      if (password.length < 8) {
+        errors.passwordLength =
+          'Passwords must be at least 8 characters in length.';
+        isValid = false;
+      }
+      if (password !== valPassword) {
+        errors.passwordsMustMatch = 'Both passwords must match';
+        isValid = false;
+      }
+    }
+    return isValid;
   }
 
   onSaveChanges(username) {
-    axios
-      .put(
-        host + `/users/${username}`,
-        {
-          Name: this.state.name ? this.state.name : this.props.user.Name,
-          /* Username: this.state.username
-            ? this.state.username
-            : this.props.user.Username,
-          Email: this.state.email ? this.state.email : this.props.user.Email,
-          //  password will need to be different than all other fields
-          //  maybe part of it's own update?
-          Password: this.state.password
-            ? this.state.password
-            : this.props.user.Password, */
-        },
-        {
-          headers: { Authorization: `Bearer ${this.state.token}` },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log('the following error occured onSavedChanges: ', e);
-      });
+    const isValid = this.userUpdateValidation();
 
-    this.setState({
-      disableForm: 'disabled',
-    });
+    if (isValid) {
+      if (this.state.username) {
+        localStorage.setItem('newUsername', this.state.username);
+      }
+      axios
+        .put(
+          host + `/users/${username}`,
+          {
+            Name: this.state.name ? this.state.name : this.props.user.Name,
+            Username: this.state.username
+              ? this.state.username
+              : this.props.user.Username,
+            Email: this.state.email ? this.state.email : this.props.user.Email,
+            // Password: this.state.password
+            //   ? this.state.password
+            //   : this.props.user.Password,
+            Birthdate: this.state.birthdate
+              ? this.state.birthdate
+              : this.props.user.Birthdate.slice(0, 10),
+          },
+          {
+            headers: { Authorization: `Bearer ${this.state.token}` },
+          }
+        )
+        .catch((e) => {
+          console.log('the following error occured onSavedChanges: ', e);
+        });
+
+      this.setState({
+        disableForm: 'disabled',
+      });
+      localStorage.setItem('changes', 'pending-changes');
+    }
   }
 
   //  deletefavoritemovies
   onDeleteFavorite(movie, user) {
-    movie.deleted = true;
-    axios.delete(host + '/users/testuser1/movies/60a45ab9e8fd876d8ae55926', {
-      headers: { Authorization: `Bearer ${this.state.token}` },
-    });
     alert(
       `${movie.Title} was deleted from ${user.Username}'s favorite movies.`
     );
+    axios.delete(host + `/users/${user}/movies/${movie}`, {
+      headers: { Authorization: `Bearer ${this.state.token}` },
+    });
+    localStorage.setItem('changes', 'pending-changes');
   }
 
   onDeleteAccount(username) {
@@ -148,12 +197,27 @@ export class UserView extends Component {
                 ></input>
               </Card.Text>
               <Card.Text>
-                Birthdate:{' '}
+                Change Password:{' '}
+                <input
+                  name="password"
+                  type="password"
+                  placeholder="Enter new password"
+                  disabled={this.state.disableForm}
+                  onChange={this.handleUserInput}
+                ></input>
+                <input
+                  name="valPassword"
+                  type="password"
+                  placeholder="Re-enter new password"
+                  disabled={this.state.disableForm}
+                  onChange={this.handleUserInput}
+                ></input>
+              </Card.Text>
+              <Card.Text>Birthdate: {user.Birthdate.slice(0, 10)}</Card.Text>
+              <Card.Text>
                 <input
                   name="birthdate"
-                  type="text"
-                  value={this.state.birthdate}
-                  placeholder={user.Birthdate}
+                  type="date"
                   disabled={this.state.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
@@ -176,6 +240,17 @@ export class UserView extends Component {
                   Delete Account
                 </button>
               </Card.Text>
+              <Col>
+                <Button
+                  variant="secondary"
+                  type="button"
+                  onClick={() => {
+                    onBackClick(null);
+                  }}
+                >
+                  Back
+                </Button>
+              </Col>
             </Card.Body>
           </Col>
         </Row>
@@ -185,12 +260,15 @@ export class UserView extends Component {
               <Col
                 md={3}
                 id={favMovie._id}
+                key={favMovie._id}
                 className={favMovie.deleted ? 'deleted-favorite' : ''}
               >
-                <MovieCard movie={favMovie} key={favMovie._id} />
+                <MovieCard movie={favMovie} />
                 <button
                   type="button"
-                  onClick={() => this.onDeleteFavorite(favMovie, user)}
+                  onClick={() =>
+                    this.onDeleteFavorite(favMovie._id, user.Username)
+                  }
                 >
                   Delete Favorite
                 </button>
@@ -201,4 +279,19 @@ export class UserView extends Component {
       </>
     );
   }
+}
+
+{
+  /*  Old version of birthdate update
+ <Card.Text>
+  Birthdate:{' '}
+  <input
+    name="birthdate"
+    type="text"
+    value={this.state.birthdate}
+    placeholder={user.Birthdate}
+    disabled={this.state.disableForm}
+    onChange={this.handleUserInput}
+  ></input>
+</Card.Text> */
 }

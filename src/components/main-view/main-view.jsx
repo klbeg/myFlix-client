@@ -40,6 +40,38 @@ export class MainView extends React.Component {
     }
   }
 
+  //  if the username has been changed in user-view,
+  //    then use the new username for get request and update
+  //    user state, also updates user info in local storage
+  //  last, sets newUsername in localStorage to ''.
+  componentDidUpdate() {
+    console.log('main-view updated');
+    if (localStorage.newUsername) {
+      let newUsername = localStorage.newUsername;
+      axios.get(host + `/users/${newUsername}`).then((response) => {
+        this.setState({
+          user: response.data,
+        });
+        localStorage.setItem('user', JSON.stringify(response.data));
+        this.populateFavMovies();
+      });
+      //  checks
+    } else if (localStorage.changes) {
+      console.log('changes is true');
+      axios
+        .get(host + `/users/${this.state.user.Username}`)
+        .then((response) => {
+          this.setState({
+            user: response.data,
+          });
+          localStorage.setItem('user', JSON.stringify(response.data));
+          this.populateFavMovies();
+        });
+    }
+    localStorage.setItem('changes', '');
+    localStorage.setItem('newUsername', '');
+  }
+
   //  get's movies from API w/token auth, set's state.movies to movies
   //  uses state.movies to get movie objects for user.FavoriteMovies
   //  sets state.favMovies to FavoriteMovie objects
@@ -85,9 +117,6 @@ export class MainView extends React.Component {
   //  as well as update favMovies
   //  will require get.user endpoint in movie-api to change
   //  or, create alternate endpoint.
-  setAndUpdateUser() {
-    axios.get(host + 'users/${user._id}', {});
-  }
 
   //  onLogin set state.user to logged in user
   //  saves the user and auth token in local storage
