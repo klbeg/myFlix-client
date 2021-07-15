@@ -19,6 +19,7 @@ export class UserView extends Component {
       token: '',
       disableForm: 'disabled',
       disableUpdatePassword: 'disabled',
+      favMovies: {},
       name: '',
       username: '',
       birthdate: '',
@@ -59,6 +60,7 @@ export class UserView extends Component {
       birthdate: this.props.user.Birthdate,
       name: this.props.user.Name,
       email: this.props.user.Email,
+      favMovies: this.props.favMovies,
     });
   }
 
@@ -116,7 +118,7 @@ export class UserView extends Component {
         )
         .then((response) => {
           console.log(response);
-          if ((response.statusText = 'ok')) {
+          if (response.statusText === 'OK') {
             this.setState({
               birthdate: response.data.Birthdate,
             });
@@ -188,14 +190,33 @@ export class UserView extends Component {
     alert(
       `${movie.Title} was deleted from ${user.Username}'s favorite movies.`
     );
-    axios.delete(host + `/users/${user}/movies/${movie}`, {
-      headers: { Authorization: `Bearer ${this.state.token}` },
-    });
-    localStorage.setItem('changes', 'pending-changes');
+    axios
+      .delete(host + `/users/${user}/movies/${movie}`, {
+        headers: { Authorization: `Bearer ${this.state.token}` },
+      })
+      .then((response) => {
+        let favArr = [];
+        response.data.map((favID) => {
+          this.props.movies.map((m) => {
+            if (m._id === favID) {
+              favArr.push(m);
+            }
+          });
+        });
+        let favMovTemp = [];
+        favArr.map((favMovie) => {
+          let favMovArr = Object.entries(favMovie);
+          favMovArr.push(['deleted', false]);
+          favMovie = Object.fromEntries(favMovArr);
+          favMovTemp.push(favMovie);
+        });
+        this.setState({
+          favMovies: favMovTemp,
+        });
+      });
   }
 
   onDeleteAccount(username) {
-    console.log(username);
     axios.delete(host + `/users/${username}`, {
       headers: { Authorization: `Bearer ${this.state.token}` },
     });
@@ -205,8 +226,8 @@ export class UserView extends Component {
   }
 
   render() {
-    const { user, onBackClick, favMovies } = this.props;
-    console.log(Object.values(this.state.errors));
+    const { user, onBackClick, favMovies, movies } = this.props;
+    console.log(favMovies);
     return (
       <>
         <Row>
@@ -329,7 +350,7 @@ export class UserView extends Component {
           </Col>
         </Row>
         <Row>
-          {favMovies.map((favMovie) => {
+          {this.state.favMovies.map((favMovie) => {
             return (
               <Col
                 md={3}
