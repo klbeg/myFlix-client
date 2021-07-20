@@ -17,6 +17,7 @@ import { GenreView } from '../genre-view/genre-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieView } from '../movie-view/movie-view';
+import MoviesList from '../movies-list/movies-list';
 //  import { MovieCard } from '../movie-card/movie-card';
 
 class MainView extends React.Component {
