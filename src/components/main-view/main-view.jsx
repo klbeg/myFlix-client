@@ -247,28 +247,3 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, { setMovies, setUser, setFavMovies })(
   MainView
 );
-
-//  if the username has been changed in user-view,
-//    then use the new username for get request and update
-//    user state, also updates user info in local storage
-//  last, sets newUsername in localStorage to ''.
-
-/*
-componentDidUpdate() {
-  console.log('main-view updated');
-  if (localStorage.changes) {
-    console.log('changes is true');
-    axios
-      .get(host + `/users/${this.state.user.Username}`)
-      .then((response) => {
-        this.setState({
-          user: response.data,
-        });
-        localStorage.setItem('user', JSON.stringify(response.data));
-        this.populateFavMovies();
-      });
-  }
-  localStorage.setItem('changes', '');
-  localStorage.setItem('newUsername', '');
-}
-*/
