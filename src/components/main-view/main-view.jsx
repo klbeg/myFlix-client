@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import { match } from 'micromatch';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser, setFavMovies } from '../../actions/actions';
 
 import { host } from '../../config';
 import { Header } from '../header/header';
@@ -23,10 +23,6 @@ import MoviesList from '../movies-list/movies-list';
 class MainView extends React.Component {
   constructor() {
     super();
-    this.state = {
-      favMovies: [],
-      user: null,
-    };
     this.onLoggedOut = this.onLoggedOut.bind(this);
   }
 
@@ -36,33 +32,9 @@ class MainView extends React.Component {
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({
-        user: JSON.parse(localStorage.getItem('user')),
-      });
-      this.getMovies(accessToken);
+      this.props.setUser(JSON.parse(localStorage.getItem('user'))),
+        this.getMovies(accessToken);
     }
-  }
-
-  //  if the username has been changed in user-view,
-  //    then use the new username for get request and update
-  //    user state, also updates user info in local storage
-  //  last, sets newUsername in localStorage to ''.
-  componentDidUpdate() {
-    console.log('main-view updated');
-    if (localStorage.changes) {
-      console.log('changes is true');
-      axios
-        .get(host + `/users/${this.state.user.Username}`)
-        .then((response) => {
-          this.setState({
-            user: response.data,
-          });
-          localStorage.setItem('user', JSON.stringify(response.data));
-          this.populateFavMovies();
-        });
-    }
-    localStorage.setItem('changes', '');
-    localStorage.setItem('newUsername', '');
   }
 
   //  get's movies from API w/token auth, set's state.movies to movies
@@ -85,29 +57,21 @@ class MainView extends React.Component {
 
   populateFavMovies() {
     let favArr = [];
-    this.state.user.FavoriteMovies.map((favID) => {
+    this.props.user.FavoriteMovies.map((favID) => {
       this.props.movies.map((m) => {
         if (m._id === favID) {
           favArr.push(m);
         }
       });
     });
-    this.setState({
-      favMovies: favArr,
-    });
+    console.log('favArr: ', favArr);
+    this.props.setFavMovies(favArr);
   }
-
-  //  will be used to update user from UserView
-  //  as well as update favMovies
-  //  will require get.user endpoint in movie-api to change
-  //  or, create alternate endpoint.
 
   //  onLogin set state.user to logged in user
   //  saves the user and auth token in local storage
   onLoggedIn(authData) {
-    this.setState({
-      user: authData.user,
-    });
+    this.props.setUser(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(authData.user));
     this.getMovies(authData.token);
@@ -125,8 +89,7 @@ class MainView extends React.Component {
   }
 
   render() {
-    const { user, favMovies } = this.state;
-    const { onLoggedOut, movies } = this.props;
+    const { onLoggedOut, movies, user, favMovies } = this.props;
     return (
       <Router>
         <Row>
@@ -274,7 +237,38 @@ class MainView extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-  return { movies: state.movies };
+  return {
+    movies: state.movies,
+    user: state.user,
+    favMovies: state.favMovies,
+  };
 };
 
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser, setFavMovies })(
+  MainView
+);
+
+//  if the username has been changed in user-view,
+//    then use the new username for get request and update
+//    user state, also updates user info in local storage
+//  last, sets newUsername in localStorage to ''.
+
+/*
+componentDidUpdate() {
+  console.log('main-view updated');
+  if (localStorage.changes) {
+    console.log('changes is true');
+    axios
+      .get(host + `/users/${this.state.user.Username}`)
+      .then((response) => {
+        this.setState({
+          user: response.data,
+        });
+        localStorage.setItem('user', JSON.stringify(response.data));
+        this.populateFavMovies();
+      });
+  }
+  localStorage.setItem('changes', '');
+  localStorage.setItem('newUsername', '');
+}
+*/
