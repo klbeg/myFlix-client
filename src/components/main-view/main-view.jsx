@@ -86,21 +86,14 @@ class MainView extends React.Component {
   populateFavMovies() {
     let favArr = [];
     this.state.user.FavoriteMovies.map((favID) => {
-      this.state.movies.map((m) => {
+      this.props.movies.map((m) => {
         if (m._id === favID) {
           favArr.push(m);
         }
       });
     });
-    let favMovTemp = [];
-    favArr.map((favMovie) => {
-      let favMovArr = Object.entries(favMovie);
-      favMovArr.push(['deleted', false]);
-      favMovie = Object.fromEntries(favMovArr);
-      favMovTemp.push(favMovie);
-    });
     this.setState({
-      favMovies: favMovTemp,
+      favMovies: favArr,
     });
   }
 
@@ -285,13 +278,3 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { setMovies })(MainView);
-/*
-//  creates and sets newSelectedMovie state for use with onClick button
-//  function
-//  still unsure about this function.  cmd+f search it on cf task 3.3
-setSelectedMovie(movie) {
-  this.setState({
-    selectedMovie: movie,
-  });
-}
-*/
