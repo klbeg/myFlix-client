@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import './user-view.scss';
 
 import { host } from '../../config';
+import { setFavMovies, setMovies, setUser } from '../../actions/actions';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { Row, Col, Button, Card } from 'react-bootstrap';
@@ -19,7 +21,6 @@ export class UserView extends Component {
       token: '',
       disableForm: 'disabled',
       disableUpdatePassword: 'disabled',
-      favMovies: {},
       name: '',
       username: '',
       birthdate: '',
@@ -60,7 +61,6 @@ export class UserView extends Component {
       birthdate: this.props.user.Birthdate,
       name: this.props.user.Name,
       email: this.props.user.Email,
-      favMovies: this.props.favMovies,
     });
   }
 
@@ -210,9 +210,7 @@ export class UserView extends Component {
           favMovie = Object.fromEntries(favMovArr);
           favMovTemp.push(favMovie);
         });
-        this.setState({
-          favMovies: favMovTemp,
-        });
+        this.props.setFavMovies(favMovTemp);
       });
   }
 
@@ -227,7 +225,6 @@ export class UserView extends Component {
 
   render() {
     const { user, onBackClick, favMovies, movies } = this.props;
-    console.log(favMovies);
     return (
       <>
         <Row>
@@ -350,7 +347,7 @@ export class UserView extends Component {
           </Col>
         </Row>
         <Row>
-          {this.state.favMovies.map((favMovie) => {
+          {this.props.favMovies.map((favMovie) => {
             return (
               <Col
                 md={3}
@@ -375,3 +372,14 @@ export class UserView extends Component {
     );
   }
 }
+let mapStateToProps = (state) => {
+  return {
+    movies: state.movies,
+    user: state.user,
+    favMovies: state.favMovies,
+  };
+};
+
+export default connect(mapStateToProps, { setMovies, setUser, setFavMovies })(
+  UserView
+);

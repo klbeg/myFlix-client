@@ -27,7 +27,7 @@ class MainView extends React.Component {
   }
 
   //  on componentMount get localStorage.token
-  //  set state.user to logged in user
+  //  set props.user to logged in user
   //  call getMovies and pass access token
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
@@ -37,9 +37,8 @@ class MainView extends React.Component {
     }
   }
 
-  //  get's movies from API w/token auth, set's state.movies to movies
-  //  uses state.movies to get movie objects for user.FavoriteMovies
-  //  sets state.favMovies to FavoriteMovie objects
+  //  API.get movies
+  //  sets store.movies, calls populateFavorites
   getMovies(token) {
     axios
       .get(host + '/movies', {
@@ -55,6 +54,8 @@ class MainView extends React.Component {
     console.log('get movies has completed');
   }
 
+  //  converts IDs from user.favMovies movie objects
+  //  sets store.favMovies to array of movie objects
   populateFavMovies() {
     let favArr = [];
     this.props.user.FavoriteMovies.map((favID) => {
@@ -68,8 +69,9 @@ class MainView extends React.Component {
     this.props.setFavMovies(favArr);
   }
 
-  //  onLogin set state.user to logged in user
-  //  saves the user and auth token in local storage
+  //  on login, sets store.user
+  //  stores user & token in local storage
+  //  calls getMovies
   onLoggedIn(authData) {
     this.props.setUser(authData.user);
     localStorage.setItem('token', authData.token);
@@ -77,13 +79,12 @@ class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  //  on Log Out reset state.(user, movies) to (null, [])
-  //  remove token and user from localStorage
+  //  on log out
+  //  sets store.movies & store.user to default
   onLoggedOut() {
-    this.setState({
-      user: null,
-      movies: [],
-    });
+    this.props.setMovies([]);
+    this.props.setUser(null);
+
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }
