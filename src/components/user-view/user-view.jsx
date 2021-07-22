@@ -56,18 +56,19 @@ export class UserView extends Component {
     console.log('user-view updated!');
   }
 
-  componentWillMount() {
-    this.setState({
-      birthdate: this.props.user.Birthdate,
-      name: this.props.user.Name,
-      email: this.props.user.Email,
-    });
-  }
+  //  componentWillMount won't work soonm
+  //  componentWillMount() {}
 
   componentDidMount() {
     console.log('UserView mounted');
     this.setState({
       token: localStorage.getItem('token'),
+    });
+
+    this.setState({
+      birthdate: this.props.user.Birthdate,
+      name: this.props.user.Name,
+      email: this.props.user.Email,
     });
   }
 

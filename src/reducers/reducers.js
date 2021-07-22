@@ -6,6 +6,7 @@ import {
   SET_MOVIES,
   SET_USER,
   SET_FAV_MOVIES,
+  SET_TOKEN,
 } from '../actions/actions';
 
 function visibilityFilter(state = '', action) {
@@ -44,11 +45,21 @@ function favMovies(state = [], action) {
   }
 }
 
+function token(state = null, action) {
+  switch (action.type) {
+    case SET_TOKEN:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
   user,
   favMovies,
+  token,
 });
 
 export default moviesApp;

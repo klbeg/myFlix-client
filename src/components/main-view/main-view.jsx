@@ -7,7 +7,12 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import { match } from 'micromatch';
 
-import { setMovies, setUser, setFavMovies } from '../../actions/actions';
+import {
+  setMovies,
+  setUser,
+  setFavMovies,
+  setToken,
+} from '../../actions/actions';
 
 import { host } from '../../config';
 import { Header } from '../header/header';
@@ -27,9 +32,10 @@ class MainView extends React.Component {
   }
 
   //  on componentMount get localStorage.token
-  //  set props.user to logged in user
+  //  set props.user & this.props.token to logged in user
   //  call getMovies and pass access token
   componentDidMount() {
+    this.props.setToken(localStorage.getItem('token'));
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.props.setUser(JSON.parse(localStorage.getItem('user'))),
@@ -74,6 +80,7 @@ class MainView extends React.Component {
   //  calls getMovies
   onLoggedIn(authData) {
     this.props.setUser(authData.user);
+    this.props.setToken(authData.token);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(authData.user));
     this.getMovies(authData.token);
@@ -84,6 +91,7 @@ class MainView extends React.Component {
   onLoggedOut() {
     this.props.setMovies([]);
     this.props.setUser(null);
+    this.props.setToken(null);
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -242,9 +250,13 @@ let mapStateToProps = (state) => {
     movies: state.movies,
     user: state.user,
     favMovies: state.favMovies,
+    token: state.token,
   };
 };
 
-export default connect(mapStateToProps, { setMovies, setUser, setFavMovies })(
-  MainView
-);
+export default connect(mapStateToProps, {
+  setMovies,
+  setUser,
+  setFavMovies,
+  setToken,
+})(MainView);

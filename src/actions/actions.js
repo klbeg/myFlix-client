@@ -2,6 +2,7 @@ export const SET_MOVIES = 'SET_MOVIES';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_USER = 'SET_USER';
 export const SET_FAV_MOVIES = 'SET_FAV_MOVIES';
+export const SET_TOKEN = 'SET_TOKEN';
 
 export function setMovies(value) {
   return {
@@ -27,6 +28,13 @@ export function setUser(value) {
 export function setFavMovies(value) {
   return {
     type: SET_FAV_MOVIES,
+    value,
+  };
+}
+
+export function setToken(value) {
+  return {
+    type: SET_TOKEN,
     value,
   };
 }
