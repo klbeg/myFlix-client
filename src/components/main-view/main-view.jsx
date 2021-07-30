@@ -1,8 +1,8 @@
 //  imported modules
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import { match } from 'micromatch';
@@ -12,18 +12,17 @@ import {
   setUser,
   setFavMovies,
   setToken,
-} from '../../actions/actions';
+} from '../../actions/actions.js';
 
 import { host } from '../../config';
 import { Header } from '../header/header';
-import { UserView } from '../user-view/user-view';
+import UserView from '../user-view/user-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieView } from '../movie-view/movie-view';
 import MoviesList from '../movies-list/movies-list';
-//  import { MovieCard } from '../movie-card/movie-card';
 
 class MainView extends React.Component {
   constructor() {
@@ -91,7 +90,7 @@ class MainView extends React.Component {
   onLoggedOut() {
     this.props.setMovies([]);
     this.props.setUser(null);
-    this.props.setToken(null);
+    this.props.setToken('');
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');

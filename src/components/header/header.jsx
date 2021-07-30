@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Row, Button, Col, Card, Container } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
@@ -42,10 +43,3 @@ export class Header extends Component {
     );
   }
 }
-
-//  connect this function to a future logout button
-//  this button should go in a future header component
-//  the following is the code for said button
-/*    onLoggedOut is located in MainView
-<button onClick={() => { this.onLoggedOut() }}>Logout</button>
-  */

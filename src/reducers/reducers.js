@@ -7,6 +7,7 @@ import {
   SET_USER,
   SET_FAV_MOVIES,
   SET_TOKEN,
+  SET_DISABLE_FORM,
 } from '../actions/actions';
 
 function visibilityFilter(state = '', action) {
@@ -54,12 +55,22 @@ function token(state = null, action) {
   }
 }
 
+function disableForm(state = 'disabled', action) {
+  switch (action.type) {
+    case SET_DISABLE_FORM:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
   user,
   favMovies,
   token,
+  disableForm,
 });
 
 export default moviesApp;
