@@ -56,7 +56,6 @@ class MainView extends React.Component {
       .catch(function (e) {
         console.log('The following error occured: ' + e);
       });
-    console.log('get movies has completed');
   }
 
   //  converts IDs from user.favMovies movie objects
@@ -70,7 +69,6 @@ class MainView extends React.Component {
         }
       });
     });
-    console.log('favArr: ', favArr);
     this.props.setFavMovies(favArr);
   }
 

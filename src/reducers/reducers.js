@@ -9,6 +9,8 @@ import {
   SET_TOKEN,
   SET_DISABLE_FORM,
   SET_DISABLE_UPDATE_PASSWORD,
+  SET_ERRORS,
+  SET_PASS_ERRORS,
 } from '../actions/actions';
 
 function visibilityFilter(state = '', action) {
@@ -74,6 +76,24 @@ function disableUpdatePassword(state = 'disabled', action) {
   }
 }
 
+function errors(state = {}, action) {
+  switch (action.type) {
+    case SET_ERRORS:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
+function passErrors(state = {}, action) {
+  switch (action.type) {
+    case SET_PASS_ERRORS:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
@@ -82,6 +102,8 @@ const moviesApp = combineReducers({
   token,
   disableForm,
   disableUpdatePassword,
+  errors,
+  passErrors,
 });
 
 export default moviesApp;

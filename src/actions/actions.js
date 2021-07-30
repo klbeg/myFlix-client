@@ -6,6 +6,8 @@ export const SET_FAV_MOVIES = 'SET_FAV_MOVIES';
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_DISABLE_FORM = 'SET_DISABLE_FORM';
 export const SET_DISABLE_UPDATE_PASSWORD = 'SET_DISABLE_UPDATE_PASSWORD';
+export const SET_ERRORS = 'SET_ERRORS';
+export const SET_PASS_ERRORS = 'SET_PASS_ERRORS';
 
 export function setMovies(value) {
   return {
@@ -61,6 +63,20 @@ export function setDisableForm(value) {
 export function setDisableUpdatePassword(value) {
   return {
     type: SET_DISABLE_UPDATE_PASSWORD,
+    value,
+  };
+}
+
+export function setErrors(value) {
+  return {
+    type: SET_ERRORS,
+    value,
+  };
+}
+
+export function setPassErrors(value) {
+  return {
+    type: SET_PASS_ERRORS,
     value,
   };
 }

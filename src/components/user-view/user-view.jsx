@@ -14,6 +14,8 @@ import {
   setToken,
   setDisableForm,
   setDisableUpdatePassword,
+  setErrors,
+  setPassErrors,
 } from '../../actions/actions';
 
 import { MovieCard } from '../movie-card/movie-card';
@@ -24,15 +26,11 @@ class UserView extends React.Component {
   constructor() {
     super();
     this.state = {
-      //disableUpdatePassword: 'disabled',
       name: '',
-      username: '',
       birthdate: '',
       email: '',
       password: '',
       valPassword: '',
-      errors: {},
-      passErrors: {},
     };
     this.handleUserInput = this.handleUserInput.bind(this);
   }
@@ -53,7 +51,6 @@ class UserView extends React.Component {
   }
 
   componentDidMount() {
-    console.log('UserView mounted');
     this.props.setToken(localStorage.getItem('token'));
 
     this.setState({
@@ -65,8 +62,7 @@ class UserView extends React.Component {
 
   //  Input validation for update user form
   userUpdateValidation() {
-    console.log('userUpdateValidation being called');
-    const { name, username, email } = this.state;
+    const { name, email } = this.state;
     let isValid = true;
     const errors = {};
     if (name) {
@@ -81,9 +77,7 @@ class UserView extends React.Component {
         isValid = false;
       }
     }
-    this.setState({
-      errors: errors,
-    });
+    this.props.setErrors(errors);
     return isValid;
   }
 
@@ -144,8 +138,8 @@ class UserView extends React.Component {
         isValidPass = false;
       }
     }
+    this.props.setPassErrors(passErrors);
     this.setState({
-      passErrors: passErrors,
       password: '',
       valPassword: '',
     });
@@ -227,7 +221,7 @@ class UserView extends React.Component {
                 <input
                   name="name"
                   type="text"
-                  value={this.state.name}
+                  placeholder={this.state.name}
                   disabled={this.props.disableForm}
                   ref="searchStringInput"
                   onChange={this.handleUserInput}
@@ -238,7 +232,7 @@ class UserView extends React.Component {
                 <input
                   name="email"
                   type="text"
-                  value={this.state.email}
+                  placeholder={this.state.email}
                   disabled={this.props.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
@@ -256,7 +250,7 @@ class UserView extends React.Component {
                 ></input>
               </Card.Text>
               <div>
-                {Object.values(this.state.errors).map((value) => {
+                {Object.values(this.props.errors).map((value) => {
                   return (
                     <div className="display-errors" key={value}>
                       {value}
@@ -283,7 +277,7 @@ class UserView extends React.Component {
                 </Button>
               </Card.Text>
               <Card.Text>
-                Change Password:{' '}
+                Change Password:
                 <input
                   name="password"
                   type="password"
@@ -303,7 +297,7 @@ class UserView extends React.Component {
                 ></input>
               </Card.Text>
               <div>
-                {Object.values(this.state.passErrors).map((value) => {
+                {Object.values(this.props.passErrors).map((value) => {
                   return (
                     <div className="display-errors" key={value}>
                       {value}
@@ -372,6 +366,8 @@ let mapStateToProps = (state) => {
     token: state.token,
     disableForm: state.disableForm,
     disableUpdatePassword: state.disableUpdatePassword,
+    errors: state.errors,
+    passErrors: state.passErrors,
   };
 };
 
@@ -379,4 +375,6 @@ export default connect(mapStateToProps, {
   setToken,
   setDisableForm,
   setDisableUpdatePassword,
+  setErrors,
+  setPassErrors,
 })(UserView);
