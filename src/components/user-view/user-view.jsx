@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import { useState } from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
+//  am I necessary?
+//  import { useState } from 'react';
+//  import { Link } from 'react-router-dom';
 
-import './user-view.scss';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Component } from 'react';
+import axios from 'axios';
 
 import { host } from '../../config';
-import { setFavMovies, setMovies, setUser } from '../../actions/actions';
+import { Row, Col, Button, Card } from 'react-bootstrap';
+
+import { setToken, setDisableForm } from '../../actions/actions';
 
 import { MovieCard } from '../movie-card/movie-card';
-import { Row, Col, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 import './user-view.scss';
 
-export class UserView extends Component {
+class UserView extends React.Component {
   constructor() {
     super();
     this.state = {
-      token: '',
-      disableForm: 'disabled',
       disableUpdatePassword: 'disabled',
       name: '',
       username: '',
@@ -34,10 +34,7 @@ export class UserView extends Component {
   }
 
   enableForm() {
-    console.log('enableform');
-    this.setState({
-      disableForm: '',
-    });
+    this.props.setDisableForm('');
   }
 
   enablePasswordUpdate() {
@@ -47,23 +44,15 @@ export class UserView extends Component {
   }
 
   handleUserInput(evt) {
+    //this.setChangeUser({
     this.setState({
       [evt.target.name]: evt.target.value,
     });
   }
 
-  componentDidUpdate() {
-    console.log('user-view updated!');
-  }
-
-  //  componentWillMount won't work soonm
-  //  componentWillMount() {}
-
   componentDidMount() {
     console.log('UserView mounted');
-    this.setState({
-      token: localStorage.getItem('token'),
-    });
+    this.props.setToken(localStorage.getItem('token'));
 
     this.setState({
       birthdate: this.props.user.Birthdate,
@@ -114,7 +103,7 @@ export class UserView extends Component {
               : this.props.user.Birthdate.slice(0, 10),
           },
           {
-            headers: { Authorization: `Bearer ${this.state.token}` },
+            headers: { Authorization: `Bearer ${this.props.token}` },
           }
         )
         .then((response) => {
@@ -129,9 +118,7 @@ export class UserView extends Component {
           console.log('the following error occured onSavedChanges: ', e);
         });
 
-      this.setState({
-        disableForm: 'disabled',
-      });
+      this.props.setDisableForm('disabled');
       localStorage.setItem('changes', 'pending-changes');
     }
   }
@@ -174,7 +161,7 @@ export class UserView extends Component {
             Password: this.state.password,
           },
           {
-            headers: { Authorization: `Bearer ${this.state.token}` },
+            headers: { Authorization: `Bearer ${this.props.token}` },
           }
         )
         .catch((e) => {
@@ -193,7 +180,7 @@ export class UserView extends Component {
     );
     axios
       .delete(host + `/users/${user}/movies/${movie}`, {
-        headers: { Authorization: `Bearer ${this.state.token}` },
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
       .then((response) => {
         let favArr = [];
@@ -217,15 +204,18 @@ export class UserView extends Component {
 
   onDeleteAccount(username) {
     axios.delete(host + `/users/${username}`, {
-      headers: { Authorization: `Bearer ${this.state.token}` },
+      headers: { Authorization: `Bearer ${this.props.token}` },
     });
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.props.setUser(null);
+    this.props.setToken('');
     alert(`Your account for ${username} has been deleted.`);
   }
 
   render() {
-    const { user, onBackClick, favMovies, movies } = this.props;
+    const { user, onBackClick, favMovies, movies, token, disableForm } =
+      this.props;
     return (
       <>
         <Row>
@@ -238,7 +228,7 @@ export class UserView extends Component {
                   name="name"
                   type="text"
                   value={this.state.name}
-                  disabled={this.state.disableForm}
+                  disabled={this.props.disableForm}
                   ref="searchStringInput"
                   onChange={this.handleUserInput}
                 ></input>
@@ -249,7 +239,7 @@ export class UserView extends Component {
                   name="email"
                   type="text"
                   value={this.state.email}
-                  disabled={this.state.disableForm}
+                  disabled={this.props.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
@@ -261,7 +251,7 @@ export class UserView extends Component {
                 <input
                   name="birthdate"
                   type="date"
-                  disabled={this.state.disableForm}
+                  disabled={this.props.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
@@ -373,14 +363,18 @@ export class UserView extends Component {
     );
   }
 }
+
 let mapStateToProps = (state) => {
   return {
     movies: state.movies,
     user: state.user,
     favMovies: state.favMovies,
+    token: state.token,
+    disableForm: state.disableForm,
   };
 };
 
-export default connect(mapStateToProps, { setMovies, setUser, setFavMovies })(
-  UserView
-);
+export default connect(mapStateToProps, {
+  setToken,
+  setDisableForm,
+})(UserView);
