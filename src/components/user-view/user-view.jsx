@@ -10,7 +10,11 @@ import axios from 'axios';
 import { host } from '../../config';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 
-import { setToken, setDisableForm } from '../../actions/actions';
+import {
+  setToken,
+  setDisableForm,
+  setDisableUpdatePassword,
+} from '../../actions/actions';
 
 import { MovieCard } from '../movie-card/movie-card';
 
@@ -20,7 +24,7 @@ class UserView extends React.Component {
   constructor() {
     super();
     this.state = {
-      disableUpdatePassword: 'disabled',
+      //disableUpdatePassword: 'disabled',
       name: '',
       username: '',
       birthdate: '',
@@ -38,9 +42,7 @@ class UserView extends React.Component {
   }
 
   enablePasswordUpdate() {
-    this.setState({
-      disableUpdatePassword: '',
-    });
+    this.props.setDisableUpdatePassword('');
   }
 
   handleUserInput(evt) {
@@ -168,9 +170,7 @@ class UserView extends React.Component {
           console.log('the following error occured onSavedChanges: ', e);
         });
     }
-    this.setState({
-      disableUpdatePassword: 'disabled',
-    });
+    this.props.setDisableUpdatePassword('disabled');
   }
 
   //  deletefavoritemovies
@@ -288,7 +288,7 @@ class UserView extends React.Component {
                   name="password"
                   type="password"
                   placeholder="Enter new password"
-                  disabled={this.state.disableUpdatePassword}
+                  disabled={this.props.disableUpdatePassword}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
@@ -298,7 +298,7 @@ class UserView extends React.Component {
                   name="valPassword"
                   type="password"
                   placeholder="Enter new password"
-                  disabled={this.state.disableUpdatePassword}
+                  disabled={this.props.disableUpdatePassword}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
@@ -371,10 +371,12 @@ let mapStateToProps = (state) => {
     favMovies: state.favMovies,
     token: state.token,
     disableForm: state.disableForm,
+    disableUpdatePassword: state.disableUpdatePassword,
   };
 };
 
 export default connect(mapStateToProps, {
   setToken,
   setDisableForm,
+  setDisableUpdatePassword,
 })(UserView);

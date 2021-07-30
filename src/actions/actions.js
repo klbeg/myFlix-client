@@ -5,6 +5,7 @@ export const SET_CHANGE_USER = 'SET_CHANGE_USER';
 export const SET_FAV_MOVIES = 'SET_FAV_MOVIES';
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_DISABLE_FORM = 'SET_DISABLE_FORM';
+export const SET_DISABLE_UPDATE_PASSWORD = 'SET_DISABLE_UPDATE_PASSWORD';
 
 export function setMovies(value) {
   return {
@@ -53,6 +54,13 @@ export function setToken(value) {
 export function setDisableForm(value) {
   return {
     type: SET_DISABLE_FORM,
+    value,
+  };
+}
+
+export function setDisableUpdatePassword(value) {
+  return {
+    type: SET_DISABLE_UPDATE_PASSWORD,
     value,
   };
 }

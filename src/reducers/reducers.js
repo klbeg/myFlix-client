@@ -8,6 +8,7 @@ import {
   SET_FAV_MOVIES,
   SET_TOKEN,
   SET_DISABLE_FORM,
+  SET_DISABLE_UPDATE_PASSWORD,
 } from '../actions/actions';
 
 function visibilityFilter(state = '', action) {
@@ -64,6 +65,15 @@ function disableForm(state = 'disabled', action) {
   }
 }
 
+function disableUpdatePassword(state = 'disabled', action) {
+  switch (action.type) {
+    case SET_DISABLE_UPDATE_PASSWORD:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
@@ -71,6 +81,7 @@ const moviesApp = combineReducers({
   favMovies,
   token,
   disableForm,
+  disableUpdatePassword,
 });
 
 export default moviesApp;
