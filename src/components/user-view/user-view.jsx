@@ -11,6 +11,8 @@ import { host } from '../../config';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 
 import {
+  setUser,
+  setChangeUser,
   setToken,
   setDisableForm,
   setDisableUpdatePassword,
@@ -25,13 +27,6 @@ import './user-view.scss';
 class UserView extends React.Component {
   constructor() {
     super();
-    this.state = {
-      name: '',
-      birthdate: '',
-      email: '',
-      password: '',
-      valPassword: '',
-    };
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
@@ -44,14 +39,14 @@ class UserView extends React.Component {
   }
 
   handleUserInput(evt) {
-    //this.setChangeUser({
-    this.setState({
+    this.props.setChangeUser({
       [evt.target.name]: evt.target.value,
     });
   }
-
+  /*
   componentDidMount() {
-    this.props.setToken(localStorage.getItem('token'));
+    this.
+    // this.props.setToken(localStorage.getItem('token'));
 
     this.setState({
       birthdate: this.props.user.Birthdate,
@@ -59,10 +54,11 @@ class UserView extends React.Component {
       email: this.props.user.Email,
     });
   }
-
+*/
   //  Input validation for update user form
   userUpdateValidation() {
-    const { name, email } = this.state;
+    let name = this.props.changeUser.Name;
+    let email = this.props.changeUser.Email;
     let isValid = true;
     const errors = {};
     if (name) {
@@ -83,19 +79,19 @@ class UserView extends React.Component {
 
   onSaveChanges(username) {
     const isValid = this.userUpdateValidation();
+    let name = this.props.changeUser.Name;
+    let email = this.props.changeUser.Email;
+    let birthdate = this.props.changeUser.Birthdate;
 
     if (isValid) {
-      if (this.state.username) {
-        localStorage.setItem('newUsername', this.state.username);
-      }
       axios
         .put(
           host + `/users/${username}`,
           {
-            Name: this.state.name ? this.state.name : this.props.user.Name,
-            Email: this.state.email ? this.state.email : this.props.user.Email,
-            Birthdate: this.state.birthdate
-              ? this.state.birthdate
+            Name: name ? name : this.props.user.Name,
+            Email: email ? email : this.props.user.Email,
+            Birthdate: birthdate
+              ? birthdate
               : this.props.user.Birthdate.slice(0, 10),
           },
           {
@@ -115,12 +111,14 @@ class UserView extends React.Component {
         });
 
       this.props.setDisableForm('disabled');
-      localStorage.setItem('changes', 'pending-changes');
     }
   }
 
   newPasswordValidation() {
-    const { password, valPassword } = this.state;
+    //const { password, valPassword } = this.state;
+    let password = this.props.changeUser.Password;
+    let valPassword = this.props.changeUser.ValPassword;
+
     const passErrors = {};
     let isValidPass = true;
     if (!password) {
@@ -139,9 +137,9 @@ class UserView extends React.Component {
       }
     }
     this.props.setPassErrors(passErrors);
-    this.setState({
-      password: '',
-      valPassword: '',
+    this.props.setChangeUser({
+      Password: '',
+      ValPassword: '',
     });
     return isValidPass;
   }
@@ -154,7 +152,7 @@ class UserView extends React.Component {
         .put(
           host + `/users/${username}/changePass`,
           {
-            Password: this.state.password,
+            Password: this.props.changeUser.Password,
           },
           {
             headers: { Authorization: `Bearer ${this.props.token}` },
@@ -208,8 +206,7 @@ class UserView extends React.Component {
   }
 
   render() {
-    const { user, onBackClick, favMovies, movies, token, disableForm } =
-      this.props;
+    const { onBackClick, favMovies, movies } = this.props;
     return (
       <>
         <Row>
@@ -219,31 +216,30 @@ class UserView extends React.Component {
               <Card.Text>
                 Name:
                 <input
-                  name="name"
+                  name="Name"
                   type="text"
-                  placeholder={this.state.name}
+                  placeholder={this.props.user.Name}
                   disabled={this.props.disableForm}
                   ref="searchStringInput"
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
               <Card.Text>
-                Email:{' '}
+                Email:
                 <input
-                  name="email"
+                  name="Email"
                   type="text"
-                  placeholder={this.state.email}
+                  placeholder={this.props.user.Email}
                   disabled={this.props.disableForm}
                   onChange={this.handleUserInput}
                 ></input>
               </Card.Text>
               <Card.Text>
-                Birthdate: {this.state.birthdate.slice(0, 10)}
+                Birthdate: {this.props.user.Birthdate.slice(0, 10)}
               </Card.Text>
-              {/*  <Card.Text>Birthdate: {user.Birthdate.slice(0, 10)}</Card.Text> */}
               <Card.Text>
                 <input
-                  name="birthdate"
+                  name="Birthdate"
                   type="date"
                   disabled={this.props.disableForm}
                   onChange={this.handleUserInput}
@@ -265,13 +261,13 @@ class UserView extends React.Component {
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => this.onSaveChanges(user.Username)}
+                  onClick={() => this.onSaveChanges(this.props.user.Username)}
                 >
                   Save Updates
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => this.onDeleteAccount(user.Username)}
+                  onClick={() => this.onDeleteAccount(this.props.user.Username)}
                 >
                   Delete Account
                 </Button>
@@ -279,7 +275,7 @@ class UserView extends React.Component {
               <Card.Text>
                 Change Password:
                 <input
-                  name="password"
+                  name="Password"
                   type="password"
                   placeholder="Enter new password"
                   disabled={this.props.disableUpdatePassword}
@@ -289,7 +285,7 @@ class UserView extends React.Component {
               <Card.Text>
                 Confirm New Password:
                 <input
-                  name="valPassword"
+                  name="ValPassword"
                   type="password"
                   placeholder="Enter new password"
                   disabled={this.props.disableUpdatePassword}
@@ -313,7 +309,9 @@ class UserView extends React.Component {
                   {' '}
                   Change Password
                 </Button>
-                <Button onClick={() => this.onSavePassword(user.Username)}>
+                <Button
+                  onClick={() => this.onSavePassword(this.props.user.Username)}
+                >
                   Save Password
                 </Button>
               </Col>
@@ -344,7 +342,10 @@ class UserView extends React.Component {
                 <button
                   type="button"
                   onClick={() =>
-                    this.onDeleteFavorite(favMovie._id, user.Username)
+                    this.onDeleteFavorite(
+                      favMovie._id,
+                      this.props.user.Username
+                    )
                   }
                 >
                   Delete Favorite
@@ -360,8 +361,9 @@ class UserView extends React.Component {
 
 let mapStateToProps = (state) => {
   return {
-    movies: state.movies,
     user: state.user,
+    changeUser: state.changeUser,
+    movies: state.movies,
     favMovies: state.favMovies,
     token: state.token,
     disableForm: state.disableForm,
@@ -372,6 +374,8 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
+  setUser,
+  setChangeUser,
   setToken,
   setDisableForm,
   setDisableUpdatePassword,

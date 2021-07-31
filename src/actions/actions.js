@@ -8,6 +8,8 @@ export const SET_DISABLE_FORM = 'SET_DISABLE_FORM';
 export const SET_DISABLE_UPDATE_PASSWORD = 'SET_DISABLE_UPDATE_PASSWORD';
 export const SET_ERRORS = 'SET_ERRORS';
 export const SET_PASS_ERRORS = 'SET_PASS_ERRORS';
+export const SET_LOGIN_USER = 'SET_LOGIN_USER';
+export const SET_LOGIN_PASS = 'SET_LOGIN_PASS';
 
 export function setMovies(value) {
   return {
@@ -16,6 +18,7 @@ export function setMovies(value) {
   };
 }
 
+//  used to filter moveis in main-view
 export function setFilter(value) {
   return {
     type: SET_FILTER,
@@ -30,11 +33,9 @@ export function setUser(value) {
   };
 }
 
-// in future will house and change states
-//  to user whene user updates info
 export function setChangeUser(value) {
   return {
-    type: SET_CHANGEUSER,
+    type: SET_CHANGE_USER,
     value,
   };
 }
@@ -67,6 +68,7 @@ export function setDisableUpdatePassword(value) {
   };
 }
 
+//  used for update user input validation
 export function setErrors(value) {
   return {
     type: SET_ERRORS,
@@ -74,9 +76,24 @@ export function setErrors(value) {
   };
 }
 
+//  used for update password input validation
 export function setPassErrors(value) {
   return {
     type: SET_PASS_ERRORS,
+    value,
+  };
+}
+
+export function setLoginUser(value) {
+  return {
+    type: SET_LOGIN_USER,
+    value,
+  };
+}
+
+export function setLoginPass(value) {
+  return {
+    type: SET_LOGIN_PASS,
     value,
   };
 }
