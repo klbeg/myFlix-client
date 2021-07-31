@@ -2,10 +2,11 @@ import { action } from 'commander';
 import { combineReducers } from 'redux';
 
 import {
-  SET_FILTER,
-  SET_MOVIES,
   SET_USER,
   SET_CHANGE_USER,
+  SET_NEW_USER,
+  SET_FILTER,
+  SET_MOVIES,
   SET_FAV_MOVIES,
   SET_TOKEN,
   SET_DISABLE_FORM,
@@ -43,10 +44,21 @@ function user(state = null, action) {
   }
 }
 
-//  needs to add new keys, not overwrite old ones
 function changeUser(state = {}, action) {
   switch (action.type) {
     case SET_CHANGE_USER:
+      return {
+        ...state,
+        ...action.value,
+      };
+    default:
+      return state;
+  }
+}
+
+function newUser(state = {}, action) {
+  switch (action.type) {
+    case SET_NEW_USER:
       return {
         ...state,
         ...action.value,
@@ -131,10 +143,11 @@ function loginPass(state = '', action) {
 }
 
 const moviesApp = combineReducers({
-  visibilityFilter,
-  movies,
   user,
   changeUser,
+  newUser,
+  visibilityFilter,
+  movies,
   favMovies,
   token,
   disableForm,

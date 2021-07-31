@@ -1,27 +1,43 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import { setNewUser, setErrors, setUser } from '../../actions/actions';
+
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 
 import { host } from '../../config';
 
 import './registration-view.scss';
 
 export function RegistrationView(props) {
+  /*
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState(0000 - 00 - 00);
   const [errors, setErrors] = useState({});
-
+*/
   //  Input validation for registration form
+  handleUserInput = (evt) => {
+    props.setNewUser({
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
   userUpdateValidation = () => {
     console.log('userUpdateValidation being called');
 
     let isValid = true;
     const errors = {};
+    let name = props.newUser.Name;
+    let username = props.newUser.Username;
+    let password = props.newUser.Password;
+    let email = props.newUser.Email;
+    let birthdate = props.newUser.Birthdate;
 
     if (!name) {
       errors.nameIsRequired = 'Name is a required field';
@@ -68,8 +84,7 @@ export function RegistrationView(props) {
       isValid = false;
     }
 
-    console.log(errors);
-    setErrors(errors);
+    props.setErrors(errors);
     return isValid;
   };
 
@@ -80,15 +95,18 @@ export function RegistrationView(props) {
     if (isValid) {
       axios
         .post(host + '/users', {
-          Name: name,
-          Username: username,
-          Password: password,
-          Email: email,
-          Birthdate: birthdate,
+          Name: props.newUser.Name,
+          Username: props.newUser.Username,
+          Password: props.newUser.Password,
+          Email: props.newUser.Email,
+          Birthdate: props.newUser.Birthdate,
         })
         .then((response) => {
           const data = response.data;
           console.log(data);
+          alert(
+            `Welcome ${props.newUser.Username}.  Your account has been created, please log in.`
+          );
           window.open('/', '_self');
         })
         .catch((e) => {
@@ -101,37 +119,46 @@ export function RegistrationView(props) {
     <Form className="registration-view-container">
       <Form.Group controlId="formName">
         <Form.Label>Name:</Form.Label>
-        <Form.Control type="text" onChange={(e) => setName(e.target.value)} />
+        <Form.Control name="Name" type="text" onChange={this.handleUserInput} />
       </Form.Group>
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control
+          name="Username"
           type="text"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={this.handleUserInput}
         />
       </Form.Group>
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control
+          name="Password"
           type="text"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={this.handleUserInput}
         />
       </Form.Group>
       <Form.Group controlId="formEmail">
         <Form.Label>Email:</Form.Label>
-        <Form.Control type="text" onChange={(e) => setEmail(e.target.value)} />
+        <Form.Control
+          name="Email"
+          type="text"
+          onChange={this.handleUserInput}
+        />
       </Form.Group>
       <Form.Group controlId="formBirthdate">
         <Form.Label>Birthdate</Form.Label>
         <Form.Control
+          name="Birthdate"
           type="date"
-          onChange={(e) => setBirthdate(e.target.value)}
+          onChange={this.handleUserInput}
         />
       </Form.Group>
       <Button variant="secondary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
-      {Object.values(errors).map((value) => {
+      {/* should use props.errors.map(value) after 
+        redux is fully implemented */}
+      {Object.values(props.errors).map((value) => {
         return (
           <div className="display-errors" key={value}>
             {value}
@@ -141,6 +168,21 @@ export function RegistrationView(props) {
     </Form>
   );
 }
+
+let mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    newUser: state.newUser,
+    errors: state.errors,
+  };
+};
+
+export default connect(mapStateToProps, {
+  setUser,
+  setNewUser,
+  setErrors,
+})(RegistrationView);
+
 /*
 RegistrationView.propTypes = {
   name: PropTypes.string.isRequired,
