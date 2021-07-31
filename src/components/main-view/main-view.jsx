@@ -20,7 +20,7 @@ import UserView from '../user-view/user-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { LoginView } from '../login-view/login-view';
+import LoginView from '../login-view/login-view';
 import { MovieView } from '../movie-view/movie-view';
 import MoviesList from '../movies-list/movies-list';
 
