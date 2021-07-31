@@ -47,7 +47,10 @@ function user(state = null, action) {
 function changeUser(state = {}, action) {
   switch (action.type) {
     case SET_CHANGE_USER:
-      return action.value;
+      return {
+        ...state,
+        ...action.value,
+      };
     default:
       return state;
   }

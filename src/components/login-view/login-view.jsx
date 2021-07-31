@@ -10,23 +10,20 @@ import { Link } from 'react-router-dom';
 import './login-view.scss';
 
 export function LoginView(props) {
-  //const [username, setUsername] = useState('');
-  //const [password, setPassword] = useState('');
   const setUsername = (e) => {
-    this.props.setLoginUser('hello?');
+    props.setLoginUser(e.target.value);
   };
 
   const setPassword = (e) => {
-    console.log(e);
-    //this.props.setLoginPass(e.value)
+    props.setLoginPass(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post(host + '/login', {
-        Username: username,
-        Password: password,
+        Username: props.loginUser,
+        Password: props.loginPass,
       })
       .then((response) => {
         const data = response.data;
