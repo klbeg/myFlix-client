@@ -43,18 +43,7 @@ class UserView extends React.Component {
       [evt.target.name]: evt.target.value,
     });
   }
-  /*
-  componentDidMount() {
-    this.
-    // this.props.setToken(localStorage.getItem('token'));
 
-    this.setState({
-      birthdate: this.props.user.Birthdate,
-      name: this.props.user.Name,
-      email: this.props.user.Email,
-    });
-  }
-*/
   //  Input validation for update user form
   userUpdateValidation() {
     let name = this.props.changeUser.Name;
