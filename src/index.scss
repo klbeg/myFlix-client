@@ -7,17 +7,19 @@ $light: #045174;
 $gray: #d89c60;
 $white: #e87a00;
 */
+
 $color1: #001f3d;
 $color2: #045174;
 $color3: #d89c60;
 $color4: #e87a00;
+$color5: white;
 $color1-shadow: #001e3d70;
 $color2-shadow: #0451744f;
 $color3-shadow: #d89c604f;
 $color4-shadow: #e87a004f;
 
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Merriweather', serif;
 }
 /*
 h4 {
@@ -25,7 +27,7 @@ h4 {
 }
 */
 .app-container {
-  background-color: $color2-shadow;
+  background-color: $color4-shadow;
 }
 
 .component-container {
@@ -37,6 +39,7 @@ h4 {
 }
 
 .btn-primary {
-  background-color: $color1 !important;
+  color: $color1 !important;
+  background-color: $color3 !important;
   border: 1px solid $color2 !important;
 }

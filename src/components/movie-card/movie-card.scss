@@ -1,14 +1,14 @@
 @use '../../index.scss';
 
-.movie-card-container {
+.card-container {
   margin: 10px 0px;
   border: 1px solid index.$color1 !important;
   border-radius: 5px;
   box-shadow: 4px 4px 2.5px index.$color1-shadow;
 }
 
-.movie-card-info {
-  color: index.$color3;
+.card-info {
+  color: index.$color5;
   background-color: index.$color2;
   //border-top: 1px solid index.$color1;
   border-radius: 0 0 1px 1px;
