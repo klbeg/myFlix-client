@@ -24,16 +24,18 @@ export class Header extends Component {
           </Col>
           <Col md={5}>
             <h3>Welcome {!user ? '' : user.Username}</h3>
-            <button onClick={onLogOut}>Logout</button>
+            <Button className="btn-primary" onClick={onLogOut}>
+              Logout
+            </Button>
             {user ? (
-              <button type="button">
+              <Button type="button" className="btn-primary">
                 <Link
                   className="edit-profile-button"
                   to={`users/${user.Username}`}
                 >
                   Edit Profile
                 </Link>
-              </button>
+              </Button>
             ) : (
               <div></div>
             )}

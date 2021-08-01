@@ -1,19 +1,31 @@
-@import url(https://fonts.googleapis.com/css2?family=Montserrat&family=Staatliches&display=swap);
-
-$light-green: #36b06f;
-$dark-green: #1e392a;
-$light: #e9c893;
-$gray: #828081;
-$white: white;
+//@import url(https://fonts.googleapis.com/css2?family=Montserrat&family=Staatliches&display=swap);
+/*
+remove after colors are fully sorted
+//$light-green: #36b06f;
+$dark-green: #001f3d;
+$light: #045174;
+$gray: #d89c60;
+$white: #e87a00;
+*/
+$color1: #001f3d;
+$color2: #045174;
+$color3: #d89c60;
+$color4: #e87a00;
+$color1-shadow: #001e3d70;
+$color2-shadow: #0451744f;
+$color3-shadow: #d89c604f;
+$color4-shadow: #e87a004f;
 
 * {
-  font-family: 'montserrat';
+  font-family: 'Montserrat', sans-serif;
 }
+/*
 h4 {
   font-family: 'staatliches';
 }
+*/
 .app-container {
-  background-color: #1e392a95;
+  background-color: $color2-shadow;
 }
 
 .component-container {
@@ -22,4 +34,9 @@ h4 {
 
 .display-errors {
   color: red;
+}
+
+.btn-primary {
+  background-color: $color1 !important;
+  border: 1px solid $color2 !important;
 }

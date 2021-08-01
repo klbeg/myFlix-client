@@ -328,7 +328,7 @@ class UserView extends React.Component {
                 className={favMovie.deleted ? 'deleted-favorite' : ''}
               >
                 <MovieCard movie={favMovie} />
-                <button
+                <Button
                   type="button"
                   onClick={() =>
                     this.onDeleteFavorite(
@@ -338,7 +338,7 @@ class UserView extends React.Component {
                   }
                 >
                   Delete Favorite
-                </button>
+                </Button>
               </Col>
             );
           })}
