@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { setNewUser, setErrors, setUser } from '../../actions/actions';
 
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -13,14 +14,8 @@ import { host } from '../../config';
 import './registration-view.scss';
 
 export function RegistrationView(props) {
-  /*
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthdate, setBirthdate] = useState(0000 - 00 - 00);
-  const [errors, setErrors] = useState({});
-*/
+  const { onBackClick } = props;
+
   //  Input validation for registration form
   handleUserInput = (evt) => {
     props.setNewUser({
@@ -155,6 +150,15 @@ export function RegistrationView(props) {
       </Form.Group>
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
+      </Button>
+      <Button
+        variant="primary"
+        type="button"
+        onClick={() => {
+          onBackClick(null);
+        }}
+      >
+        Back
       </Button>
       {/* should use props.errors.map(value) after 
         redux is fully implemented */}

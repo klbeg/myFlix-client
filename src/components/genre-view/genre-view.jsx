@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 import './genre-view.scss';
 

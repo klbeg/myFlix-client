@@ -131,7 +131,7 @@ class MainView extends React.Component {
               if (user) return <Redirect to="/" />;
               return (
                 <Col className="p-0">
-                  <RegistrationView />
+                  <RegistrationView onBackClick={() => history.goBack()} />
                 </Col>
               );
             }}
