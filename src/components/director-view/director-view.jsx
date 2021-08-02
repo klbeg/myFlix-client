@@ -12,13 +12,12 @@ export class DirectorView extends React.Component {
     return (
       <Card className="basic-component-background movie-view-container p-3">
         <div className="d-flex">
-          {/*}
           <Card.Img
             variant="left"
             className="movie-image img-fluid col-md-4 basic-card-styling"
-            src={movie.ImagePath}
+            src={director.Image}
           />
-          {*/}
+
           <Card.Body>
             <h2>{director.Name}</h2>
             <Card.Text>{director.Bio}</Card.Text>
