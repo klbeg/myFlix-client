@@ -116,7 +116,7 @@ export function RegistrationView(props) {
   };
 
   return (
-    <Form className="registration-view-container">
+    <Form className="registration-view-container card-info p-3">
       <Form.Group controlId="formName">
         <Form.Label>Name:</Form.Label>
         <Form.Control name="Name" type="text" onChange={this.handleUserInput} />
@@ -153,7 +153,7 @@ export function RegistrationView(props) {
           onChange={this.handleUserInput}
         />
       </Form.Group>
-      <Button variant="secondary" type="submit" onClick={handleSubmit}>
+      <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
       {/* should use props.errors.map(value) after 

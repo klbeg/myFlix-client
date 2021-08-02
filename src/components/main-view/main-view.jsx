@@ -112,7 +112,7 @@ class MainView extends React.Component {
               //  if no user, show LoginView
               if (!user)
                 return (
-                  <Col>
+                  <Col className="p-0">
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
@@ -130,7 +130,7 @@ class MainView extends React.Component {
             render={() => {
               if (user) return <Redirect to="/" />;
               return (
-                <Col>
+                <Col className="p-0">
                   <RegistrationView />
                 </Col>
               );
@@ -143,13 +143,13 @@ class MainView extends React.Component {
             render={({ match, history }) => {
               if (!user)
                 return (
-                  <Col>
+                  <Col className="p-0">
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
               if (movies.length === 0) return <div className="main-view" />;
               return (
-                <Col md={8}>
+                <Col md={8} className="p-0">
                   <MovieView
                     movie={movies.find((m) => m._id === match.params.movieId)}
                     onBackClick={() => history.goBack()}
@@ -166,7 +166,7 @@ class MainView extends React.Component {
             render={({ match, history }) => {
               if (!user)
                 return (
-                  <Col>
+                  <Col className="p-0">
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
@@ -192,7 +192,7 @@ class MainView extends React.Component {
             render={({ match, history }) => {
               if (!user)
                 return (
-                  <Col>
+                  <Col className="p-0">
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
@@ -218,7 +218,7 @@ class MainView extends React.Component {
             render={({ match, history }) => {
               if (!user)
                 return (
-                  <Col>
+                  <Col className="p-0">
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );

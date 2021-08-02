@@ -15,34 +15,41 @@ export class MovieView extends React.Component {
       <div className="movie-view-container">
         <Card>
           <Row>
-            <Col md={6}>
-              <Card.Img src={movie.ImagePath} />
+            <Col
+              md={4}
+              className="d-flex align-items-center justify-content-center"
+            >
+              <Card.Img
+                variant="left"
+                className="movie-image"
+                src={movie.ImagePath}
+              />
             </Col>
-            <Col md={6}>
+            <Col md={8} className="card-info p-0">
               <Card.Body>
                 <h1>{movie.Title}</h1>
                 <Card.Title>Director: {movie.Director.Name}</Card.Title>
                 <Card.Title>{movie.Genre.Name}</Card.Title>
                 <Card.Text>{movie.Description}</Card.Text>
                 <Link to={`/directors/${movie.Director.Name}`}>
-                  <Button variant="link">Director details</Button>
+                  <Button variant="primary">Director details</Button>
                 </Link>
                 <Link to={`/genres/${movie.Genre.Name}`}>
-                  <Button variant="link">Genre details</Button>
+                  <Button variant="primary">Genre details</Button>
                 </Link>
+
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={() => {
+                    onBackClick(null);
+                  }}
+                >
+                  Back
+                </Button>
               </Card.Body>
             </Col>
           </Row>
-
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={() => {
-              onBackClick(null);
-            }}
-          >
-            Back
-          </Button>
         </Card>
       </div>
     );

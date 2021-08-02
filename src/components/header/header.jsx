@@ -19,26 +19,38 @@ export class Header extends Component {
     return (
       <Container className="header-element">
         <Row>
-          <Col md={3}>
+          <Col
+            md={4}
+            className="d-flex justify-content-center align-items-center"
+          >
             <h1>My Flix API</h1>
           </Col>
-          <Col md={5}>
-            <h3>Welcome {!user ? '' : user.Username}</h3>
-            <Button className="btn-primary" onClick={onLogOut}>
-              Logout
-            </Button>
-            {user ? (
-              <Button type="button" className="btn-primary">
-                <Link
-                  className="edit-profile-button"
-                  to={`users/${user.Username}`}
-                >
-                  Edit Profile
-                </Link>
+          <Col md={4}>{/* for use in eventual nav bar */}</Col>
+          <Col md={4} className="d-flex flex-column justify-content-end">
+            <h3 className="d-flex justify-content-center">
+              Welcome {!user ? '' : user.Username}
+            </h3>
+            <div className="d-flex justify-content-center">
+              <Button
+                variant="primary"
+                className={!user ? 'd-none' : ''}
+                onClick={onLogOut}
+              >
+                Logout
               </Button>
-            ) : (
-              <div></div>
-            )}
+              {user ? (
+                <Button type="button" className="btn-primary">
+                  <Link
+                    className="edit-profile-button"
+                    to={`users/${user.Username}`}
+                  >
+                    Edit Profile
+                  </Link>
+                </Button>
+              ) : (
+                <div></div>
+              )}
+            </div>
           </Col>
         </Row>
       </Container>
