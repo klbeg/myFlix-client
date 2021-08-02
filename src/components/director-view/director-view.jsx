@@ -10,24 +10,29 @@ export class DirectorView extends React.Component {
     const { director, onBackClick } = this.props;
 
     return (
-      <div className="component-container">
-        <Card>
-          <Row>
-            <Col className="basic-card-styling">
-              <h2>{director.Name}</h2>
-              <Card.Text>{director.Bio}</Card.Text>
-            </Col>
-          </Row>
-          <Button
-            type="button"
-            onClick={() => {
-              onBackClick(null);
-            }}
-          >
-            Back
-          </Button>
-        </Card>
-      </div>
+      <Card className="basic-component-background movie-view-container p-3">
+        <div className="d-flex">
+          {/*}
+          <Card.Img
+            variant="left"
+            className="movie-image img-fluid col-md-4 basic-card-styling"
+            src={movie.ImagePath}
+          />
+          {*/}
+          <Card.Body>
+            <h2>{director.Name}</h2>
+            <Card.Text>{director.Bio}</Card.Text>
+            <Button
+              type="button"
+              onClick={() => {
+                onBackClick(null);
+              }}
+            >
+              Back
+            </Button>
+          </Card.Body>
+        </div>
+      </Card>
     );
   }
 }
