@@ -113,68 +113,65 @@ export function RegistrationView(props) {
 
   return (
     <Card.Body className="registration-view-container basic-card-styling p-3">
-      <Form className="col-xsm-12 ">
-        <Form.Group controlId="formName">
-          <Form.Label>Name:</Form.Label>
-          <Form.Control
-            name="Name"
-            type="text"
-            onChange={this.handleUserInput}
-          />
-        </Form.Group>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control
-            name="Username"
-            type="text"
-            onChange={this.handleUserInput}
-          />
-        </Form.Group>
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-            name="Password"
-            type="text"
-            onChange={this.handleUserInput}
-          />
-        </Form.Group>
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email:</Form.Label>
-          <Form.Control
-            name="Email"
-            type="text"
-            onChange={this.handleUserInput}
-          />
-        </Form.Group>
-        <Form.Group controlId="formBirthdate">
-          <Form.Label>Birthdate</Form.Label>
-          <Form.Control
-            name="Birthdate"
-            type="date"
-            onChange={this.handleUserInput}
-          />
-        </Form.Group>
-        <Button type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <Button
-          type="button"
-          onClick={() => {
-            onBackClick(null);
-          }}
-        >
-          Back
-        </Button>
-        {/* should use props.errors.map(value) after 
+      <div className="col-md-5 col-xsm-12">
+        <Form>
+          <Form.Group controlId="formName">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control
+              name="Name"
+              type="text"
+              onChange={this.handleUserInput}
+            />
+          </Form.Group>
+          <Form.Group controlId="formUsername">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control
+              name="Username"
+              type="text"
+              onChange={this.handleUserInput}
+            />
+          </Form.Group>
+          <Form.Group controlId="formPassword">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              name="Password"
+              type="text"
+              onChange={this.handleUserInput}
+            />
+          </Form.Group>
+          <Form.Group controlId="formEmail">
+            <Form.Label>Email:</Form.Label>
+            <Form.Control
+              name="Email"
+              type="text"
+              onChange={this.handleUserInput}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBirthdate">
+            <Form.Label>Birthdate</Form.Label>
+            <Form.Control
+              name="Birthdate"
+              type="date"
+              onChange={this.handleUserInput}
+            />
+          </Form.Group>
+          <Button type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+          <Link className="btn btn-primary" to={`/`}>
+            Back
+          </Link>
+          {/* should use props.errors.map(value) after 
         redux is fully implemented */}
-        {Object.values(props.errors).map((value) => {
-          return (
-            <div className="display-errors" key={value}>
-              {value}
-            </div>
-          );
-        })}
-      </Form>
+          {Object.values(props.errors).map((value) => {
+            return (
+              <div className="display-errors" key={value}>
+                {value}
+              </div>
+            );
+          })}
+        </Form>
+      </div>
     </Card.Body>
   );
 }
