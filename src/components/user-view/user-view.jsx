@@ -199,10 +199,10 @@ class UserView extends React.Component {
     return (
       <>
         <Row>
-          <Col>
+          <Col className="p-0">
             <Card.Body className="user-info">
-              <h2>User Info:</h2>
-              <Form>
+              <h1>User Info:</h1>
+              <Form className="col-md-5">
                 <Form.Label>Name:</Form.Label>
                 <Form.Control
                   name="Name"
@@ -212,28 +212,23 @@ class UserView extends React.Component {
                   ref="searchStringInput"
                   onChange={this.handleUserInput}
                 ></Form.Control>
-
-                <Card.Text>
-                  Email:
-                  <input
-                    name="Email"
-                    type="text"
-                    placeholder={this.props.user.Email}
-                    disabled={this.props.disableForm}
-                    onChange={this.handleUserInput}
-                  ></input>
-                </Card.Text>
-                <Card.Text>
+                <Form.Label> Email:</Form.Label>
+                <Form.Control
+                  name="Email"
+                  type="text"
+                  placeholder={this.props.user.Email}
+                  disabled={this.props.disableForm}
+                  onChange={this.handleUserInput}
+                ></Form.Control>
+                <Form.Label>
                   Birthdate: {this.props.user.Birthdate.slice(0, 10)}
-                </Card.Text>
-                <Card.Text>
-                  <input
-                    name="Birthdate"
-                    type="date"
-                    disabled={this.props.disableForm}
-                    onChange={this.handleUserInput}
-                  ></input>
-                </Card.Text>
+                </Form.Label>
+                <Form.Control
+                  name="Birthdate"
+                  type="date"
+                  disabled={this.props.disableForm}
+                  onChange={this.handleUserInput}
+                ></Form.Control>
               </Form>
               <div>
                 {Object.values(this.props.errors).map((value) => {
@@ -244,7 +239,7 @@ class UserView extends React.Component {
                   );
                 })}
               </div>
-              <Card.Text>
+              <Col className="pt-3 pb-4">
                 <Button type="button" onClick={() => this.enableForm()}>
                   {' '}
                   Edit
@@ -261,27 +256,25 @@ class UserView extends React.Component {
                 >
                   Delete Account
                 </Button>
-              </Card.Text>
-              <Card.Text>
-                Change Password:
-                <input
+              </Col>
+              <Form className="col-md-5">
+                <Form.Label>Change Password:</Form.Label>
+                <Form.Control
                   name="Password"
                   type="password"
                   placeholder="Enter new password"
                   disabled={this.props.disableUpdatePassword}
                   onChange={this.handleUserInput}
-                ></input>
-              </Card.Text>
-              <Card.Text>
-                Confirm New Password:
-                <input
+                ></Form.Control>
+                <Form.Label>Confirm New Password:</Form.Label>
+                <Form.Control
                   name="ValPassword"
                   type="password"
                   placeholder="Enter new password"
                   disabled={this.props.disableUpdatePassword}
                   onChange={this.handleUserInput}
-                ></input>
-              </Card.Text>
+                ></Form.Control>
+              </Form>
               <div>
                 {Object.values(this.props.passErrors).map((value) => {
                   return (
@@ -291,12 +284,11 @@ class UserView extends React.Component {
                   );
                 })}
               </div>
-              <Col>
+              <Col className="pt-3 pb-2">
                 <Button
                   type="button"
                   onClick={() => this.enablePasswordUpdate()}
                 >
-                  {' '}
                   Change Password
                 </Button>
                 <Button
