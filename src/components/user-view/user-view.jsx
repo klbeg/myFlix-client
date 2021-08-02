@@ -200,7 +200,7 @@ class UserView extends React.Component {
       <>
         <Row>
           <Col className="p-0">
-            <Card.Body className="user-info">
+            <Card.Body className="basic-component-background">
               <h1>User Info:</h1>
               <Form className="col-md-5">
                 <Form.Label>Name:</Form.Label>
