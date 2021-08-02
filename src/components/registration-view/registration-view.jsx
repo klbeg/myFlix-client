@@ -154,11 +154,10 @@ export function RegistrationView(props) {
             onChange={this.handleUserInput}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button type="submit" onClick={handleSubmit}>
           Submit
         </Button>
         <Button
-          variant="primary"
           type="button"
           onClick={() => {
             onBackClick(null);

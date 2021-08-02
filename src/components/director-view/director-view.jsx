@@ -19,7 +19,6 @@ export class DirectorView extends React.Component {
             </Col>
           </Row>
           <Button
-            variant="primary"
             type="button"
             onClick={() => {
               onBackClick(null);

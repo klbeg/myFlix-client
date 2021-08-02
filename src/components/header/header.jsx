@@ -31,15 +31,11 @@ export class Header extends Component {
               Welcome {!user ? '' : user.Username}
             </h3>
             <div className="d-flex justify-content-center">
-              <Button
-                variant="primary"
-                className={!user ? 'd-none' : ''}
-                onClick={onLogOut}
-              >
+              <Button className={!user ? 'd-none' : ''} onClick={onLogOut}>
                 Logout
               </Button>
               {user ? (
-                <Button type="button" className="btn-primary">
+                <Button type="button">
                   <Link
                     className="edit-profile-button"
                     to={`users/${user.Username}`}

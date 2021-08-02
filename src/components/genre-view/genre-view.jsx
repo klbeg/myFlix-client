@@ -17,7 +17,6 @@ export class GenreView extends React.Component {
             </Col>
           </Row>
           <Button
-            variant="primary"
             type="button"
             onClick={() => {
               onBackClick(null);

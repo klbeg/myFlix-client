@@ -241,7 +241,6 @@ class UserView extends React.Component {
               </div>
               <Col className="pt-3 pb-4">
                 <Button type="button" onClick={() => this.enableForm()}>
-                  {' '}
                   Edit
                 </Button>
                 <Button
@@ -299,7 +298,6 @@ class UserView extends React.Component {
               </Col>
               <Col>
                 <Button
-                  variant="secondary"
                   type="button"
                   onClick={() => {
                     onBackClick(null);
@@ -315,7 +313,9 @@ class UserView extends React.Component {
           {this.props.favMovies.map((favMovie) => {
             return (
               <Col
-                md={3}
+                lg={4}
+                md={6}
+                sm={12}
                 id={favMovie._id}
                 key={favMovie._id}
                 className={favMovie.deleted ? 'deleted-favorite' : ''}
