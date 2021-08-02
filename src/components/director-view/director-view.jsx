@@ -13,7 +13,7 @@ export class DirectorView extends React.Component {
       <div className="component-container">
         <Card>
           <Row>
-            <Col className="card-info">
+            <Col className="basic-card-styling">
               <h2>{director.Name}</h2>
               <Card.Text>{director.Bio}</Card.Text>
             </Col>

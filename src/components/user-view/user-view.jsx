@@ -8,7 +8,7 @@ import { Component } from 'react';
 import axios from 'axios';
 
 import { host } from '../../config';
-import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Row, Col, Button, Card, Form } from 'react-bootstrap';
 
 import {
   setUser,
@@ -202,38 +202,39 @@ class UserView extends React.Component {
           <Col>
             <Card.Body className="user-info">
               <h2>User Info:</h2>
-              <Card.Text>
-                Name:
-                <input
+              <Form>
+                <Form.Label>Name:</Form.Label>
+                <Form.Control
                   name="Name"
                   type="text"
                   placeholder={this.props.user.Name}
                   disabled={this.props.disableForm}
                   ref="searchStringInput"
                   onChange={this.handleUserInput}
-                ></input>
-              </Card.Text>
-              <Card.Text>
-                Email:
-                <input
-                  name="Email"
-                  type="text"
-                  placeholder={this.props.user.Email}
-                  disabled={this.props.disableForm}
-                  onChange={this.handleUserInput}
-                ></input>
-              </Card.Text>
-              <Card.Text>
-                Birthdate: {this.props.user.Birthdate.slice(0, 10)}
-              </Card.Text>
-              <Card.Text>
-                <input
-                  name="Birthdate"
-                  type="date"
-                  disabled={this.props.disableForm}
-                  onChange={this.handleUserInput}
-                ></input>
-              </Card.Text>
+                ></Form.Control>
+
+                <Card.Text>
+                  Email:
+                  <input
+                    name="Email"
+                    type="text"
+                    placeholder={this.props.user.Email}
+                    disabled={this.props.disableForm}
+                    onChange={this.handleUserInput}
+                  ></input>
+                </Card.Text>
+                <Card.Text>
+                  Birthdate: {this.props.user.Birthdate.slice(0, 10)}
+                </Card.Text>
+                <Card.Text>
+                  <input
+                    name="Birthdate"
+                    type="date"
+                    disabled={this.props.disableForm}
+                    onChange={this.handleUserInput}
+                  ></input>
+                </Card.Text>
+              </Form>
               <div>
                 {Object.values(this.props.errors).map((value) => {
                   return (

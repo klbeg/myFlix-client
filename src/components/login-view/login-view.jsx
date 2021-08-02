@@ -30,7 +30,8 @@ export function LoginView(props) {
         props.onLoggedIn(data);
       })
       .catch((e) => {
-        console.log('The username you entered does not exist.');
+        alert('The username or password you entered is incorrect.');
+        console.log('Username or password is incorrect.');
       });
   };
   const linkRegister = (e) => {
@@ -38,13 +39,13 @@ export function LoginView(props) {
   };
 
   return (
-    <Card.Body className="card-info">
-      <Form className="component-container">
-        <Form.Group controlId="formUsername">
+    <Card.Body className="basic-card-styling">
+      <Form className="component-container col-md-5 col-xsm-12">
+        <Form.Group /* className="col-md-4 pl-0" */ controlId="formUsername">
           <Form.Label>Username:</Form.Label>
           <Form.Control name="Username" type="text" onChange={setUsername} />
         </Form.Group>
-        <Form.Group controlId="fromPassword">
+        <Form.Group /* className="col-md-4 pl-0" */ controlId="fromPassword">
           <Form.Label className="form-label">Password:</Form.Label>
           <Form.Control type="password" onChange={setPassword}></Form.Control>
         </Form.Group>

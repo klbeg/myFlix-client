@@ -25,7 +25,7 @@ export class MovieView extends React.Component {
                 src={movie.ImagePath}
               />
             </Col>
-            <Col md={8} className="card-info p-0">
+            <Col md={8} className="basic-card-styling p-0">
               <Card.Body>
                 <h1>{movie.Title}</h1>
                 <Card.Title>Director: {movie.Director.Name}</Card.Title>
