@@ -17,15 +17,12 @@ $color1-shadow: #001e3d70;
 $color2-shadow: #0451744f;
 $color3-shadow: #d89c604f;
 $color4-shadow: #e87a004f;
+$error-text: rgb(255, 217, 0);
 
 * {
   font-family: 'Merriweather', serif;
 }
-/*
-h4 {
-  font-family: 'staatliches';
-}
-*/
+
 .app-container {
   background-color: $color4-shadow;
 }
@@ -35,14 +32,15 @@ h4 {
 }
 
 .display-errors {
-  color: red;
+  margin-top: 5px;
+  padding-left: 15px;
+  color: $error-text;
 }
 
-.btn-primary {
-  color: $color1 !important;
-  background-color: $color3 !important;
-  border: 1px solid $color1 !important;
-  margin: 0 1px !important;
+.basic-component-background {
+  color: $color5;
+  background-color: $color2 !important;
+  border-radius: 0 !important;
 }
 
 .basic-card-styling {
@@ -51,8 +49,14 @@ h4 {
   border-radius: 0 0 1px 1px;
 }
 
-.basic-component-background {
-  color: $color5;
-  background-color: $color2 !important;
-  border-radius: 0 !important;
+.form-label {
+  margin-top: 5px;
+  margin-bottom: 1.5px !important;
+}
+
+.btn-primary {
+  color: $color1 !important;
+  background-color: $color3 !important;
+  border: 1px solid $color1 !important;
+  margin: 0 1px !important;
 }

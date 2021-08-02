@@ -17,7 +17,7 @@ export class Header extends Component {
     const { onLogOut, user } = this.props;
 
     return (
-      <Container className="header-element">
+      <Container className="header-element py-3">
         <Row>
           <Col
             md={4}
