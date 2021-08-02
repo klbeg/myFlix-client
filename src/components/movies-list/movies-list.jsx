@@ -20,7 +20,7 @@ function MoviesList(props) {
 
   return (
     <>
-      <Col className="mt-3 pl-0 d-flex">
+      <Col className="p-3 pl-0 d-flex basic-card-styling">
         <div className="col-md-3 pl-0">
           <VisibilityFilterInput visibilityFilter={visibilityFilter} />
         </div>

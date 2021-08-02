@@ -1,7 +1,9 @@
 @use '../../index.scss';
 
 .header-element {
+  z-index: 5;
   color: index.$color4;
   background-color: index.$color1;
   width: 100%;
+  box-shadow: 0 4px 5px index.$color1-shadow;
 }
