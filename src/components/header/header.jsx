@@ -24,7 +24,7 @@ export class Header extends Component {
             md={4}
             className="d-flex justify-content-center align-items-center"
           >
-            <h1>My Flix API</h1>
+            <h1>Movie Craze</h1>
           </Col>
           <Col md={4}>{/* for use in eventual nav bar */}</Col>
           <Col md={4} className="d-flex flex-column justify-content-end">
@@ -36,24 +36,20 @@ export class Header extends Component {
                 Logout
               </Button>
               {user ? (
-                //<Link to={`users/${user.Username}`}>
                 <Button
                   type="button"
                   className="btn-primary"
-                  onClick={
-                    () =>
-                      window.location.replace(
-                        'http://' +
-                          window.location.href.split('/')[2] +
-                          `/users/${user.Username}`
-                      )
-                    //console.log(window.location.href.split('/')[2])
+                  onClick={() =>
+                    window.location.replace(
+                      'http://' +
+                        window.location.href.split('/')[2] +
+                        `/users/${user.Username}`
+                    )
                   }
                 >
                   Edit Profile
                 </Button>
               ) : (
-                //</Link>
                 <div></div>
               )}
             </div>

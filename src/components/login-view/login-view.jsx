@@ -41,11 +41,11 @@ export function LoginView(props) {
   return (
     <Card.Body className="basic-card-styling">
       <Form className="component-container col-md-5 col-xsm-12">
-        <Form.Group /* className="col-md-4 pl-0" */ controlId="formUsername">
+        <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
           <Form.Control name="Username" type="text" onChange={setUsername} />
         </Form.Group>
-        <Form.Group /* className="col-md-4 pl-0" */ controlId="fromPassword">
+        <Form.Group controlId="fromPassword">
           <Form.Label className="form-label">Password:</Form.Label>
           <Form.Control type="password" onChange={setPassword}></Form.Control>
         </Form.Group>

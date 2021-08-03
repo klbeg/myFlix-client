@@ -114,7 +114,7 @@ class UserView extends React.Component {
     if (password && valPassword) {
       if (password.length < 7) {
         passErrors.passwordLength =
-          'Passwords must be at least 8 characters in length.';
+          'Passwords must be at least 7 characters in length.';
         isValidPass = false;
       }
       if (password !== valPassword) {
