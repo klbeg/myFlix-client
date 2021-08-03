@@ -26,7 +26,12 @@ $error-text: rgb(255, 217, 0);
 .app-container {
   background-color: $color4-shadow;
 }
-
+/*
+body {
+  background-image: url('theater-background.jpg');
+  background-size: cover;
+}
+*/
 .component-container {
   height: 100vh;
 }

@@ -35,15 +35,24 @@ export class Header extends Component {
                 Logout
               </Button>
               {user ? (
-                <Button type="button">
-                  <Link
-                    className="edit-profile-button"
-                    to={`users/${user.Username}`}
-                  >
-                    Edit Profile
-                  </Link>
+                //<Link to={`users/${user.Username}`}>
+                <Button
+                  type="button"
+                  className="btn-primary"
+                  onClick={
+                    () =>
+                      window.location.replace(
+                        'http://' +
+                          window.location.href.split('/')[2] +
+                          `/users/${user.Username}`
+                      )
+                    //console.log(window.location.href.split('/')[2])
+                  }
+                >
+                  Edit Profile
                 </Button>
               ) : (
+                //</Link>
                 <div></div>
               )}
             </div>

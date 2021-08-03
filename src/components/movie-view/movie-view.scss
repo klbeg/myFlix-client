@@ -1,5 +1,10 @@
-@use '../../index';
-
 .movie-view-container {
   height: 100vh;
 }
+/*
+@include media-breakpoint-up(sm) {
+  .movie-image {
+    display: none;
+  }
+}
+*/

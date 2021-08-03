@@ -239,7 +239,7 @@ class UserView extends React.Component {
                   );
                 })}
               </div>
-              <Col className="pt-3 pb-4">
+              <Col className="pt-3 pb-2">
                 <Button type="button" onClick={() => this.enableForm()}>
                   Edit
                 </Button>
