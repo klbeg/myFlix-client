@@ -340,7 +340,7 @@ class UserView extends React.Component {
 
 UserView.propTypes = {
   changeUser: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
+    Name: PropTypes.string,
     Password: PropTypes.string,
     Email: PropTypes.string,
     Birthdate: PropTypes.instanceOf(Date),

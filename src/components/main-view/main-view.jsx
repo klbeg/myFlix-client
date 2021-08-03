@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import { match } from 'micromatch';
@@ -241,6 +242,63 @@ class MainView extends React.Component {
     );
   }
 }
+
+MainView.propTypes = {
+  favMovies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Description: PropTypes.string.isRequired,
+      Director: PropTypes.shape({
+        Bio: PropTypes.string.isRequired,
+        Birth: PropTypes.string.isRequired,
+        Image: PropTypes.string.isRequired,
+        Name: PropTypes.string.isRequired,
+      }),
+      Featured: PropTypes.bool.isRequired,
+      Genre: PropTypes.shape({
+        Description: PropTypes.string.isRequired,
+        Name: PropTypes.string.isRequired,
+      }),
+      ImagePath: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
+    })
+  ),
+
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Description: PropTypes.string.isRequired,
+      Director: PropTypes.shape({
+        Bio: PropTypes.string.isRequired,
+        Birth: PropTypes.string.isRequired,
+        Image: PropTypes.string.isRequired,
+        Name: PropTypes.string.isRequired,
+      }),
+      Featured: PropTypes.bool.isRequired,
+      Genre: PropTypes.shape({
+        Description: PropTypes.string.isRequired,
+        Name: PropTypes.string.isRequired,
+      }),
+      ImagePath: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
+    })
+  ),
+
+  user: PropTypes.shape({
+    Birthdate: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    Name: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Username: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+  }),
+
+  setFavMovies: PropTypes.func.isRequired,
+  setMovies: PropTypes.func.isRequired,
+  setToken: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
+};
 
 let mapStateToProps = (state) => {
   return {
