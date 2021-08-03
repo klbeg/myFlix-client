@@ -155,14 +155,6 @@ export function RegistrationView(props) {
               onChange={this.handleUserInput}
             />
           </Form.Group>
-          <Button type="submit" onClick={handleSubmit}>
-            Submit
-          </Button>
-          <Link className="btn btn-primary" to={`/`}>
-            Back
-          </Link>
-          {/* should use props.errors.map(value) after 
-        redux is fully implemented */}
           {Object.values(props.errors).map((value) => {
             return (
               <div className="display-errors" key={value}>
@@ -170,6 +162,12 @@ export function RegistrationView(props) {
               </div>
             );
           })}
+          <Button type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+          <Link className="btn btn-primary" to={`/`}>
+            Back
+          </Link>
         </Form>
       </div>
     </Card.Body>

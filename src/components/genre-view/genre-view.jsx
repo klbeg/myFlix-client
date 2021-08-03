@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { Row, Col, Button, Card } from 'react-bootstrap';
-//import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import './genre-view.scss';
 
@@ -35,3 +36,11 @@ export class GenreView extends React.Component {
     );
   }
 }
+
+GenreView.propTypes = {
+  onBackClick: PropTypes.func.isRequired,
+  genre: PropTypes.shape({
+    Description: PropTypes.string.isRequired,
+    Name: PropTypes.string.isRequired,
+  }),
+};

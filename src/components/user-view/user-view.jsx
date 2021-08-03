@@ -338,12 +338,13 @@ class UserView extends React.Component {
   }
 }
 
-RegistrationView.propTypes = {
-  name: PropTypes.string,
-
-  password: PropTypes.string,
-  email: PropTypes.string,
-  birthdate: PropTypes.instanceOf(Date),
+UserView.propTypes = {
+  changeUser: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+    Password: PropTypes.string,
+    Email: PropTypes.string,
+    Birthdate: PropTypes.instanceOf(Date),
+  }),
 };
 
 let mapStateToProps = (state) => {

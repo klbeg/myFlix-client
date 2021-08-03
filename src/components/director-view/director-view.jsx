@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Row, Col, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import './director-view.scss';
 import '../../index.scss';
@@ -36,3 +36,13 @@ export class DirectorView extends React.Component {
     );
   }
 }
+
+DirectorView.propTypes = {
+  onBackClick: PropTypes.func.isRequired,
+  director: PropTypes.shape({
+    Bio: PropTypes.string.isRequired,
+    Birth: PropTypes.string.isRequired,
+    Image: PropTypes.string.isRequired,
+    Birth: PropTypes.string.isRequired,
+  }),
+};
