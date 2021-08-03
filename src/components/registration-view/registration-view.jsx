@@ -190,7 +190,6 @@ export default connect(mapStateToProps, {
   setErrors,
 })(RegistrationView);
 
-/*
 RegistrationView.propTypes = {
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
@@ -198,4 +197,3 @@ RegistrationView.propTypes = {
   email: PropTypes.string.isRequired,
   birthdate: PropTypes.instanceOf(Date),
 };
-*/

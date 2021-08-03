@@ -1,12 +1,9 @@
-//  am I necessary?
-//  import { useState } from 'react';
-//  import { Link } from 'react-router-dom';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { Component } from 'react';
 import axios from 'axios';
 
+import PropTypes from 'prop-types';
 import { host } from '../../config';
 import { Row, Col, Button, Card, Form } from 'react-bootstrap';
 
@@ -340,6 +337,14 @@ class UserView extends React.Component {
     );
   }
 }
+
+RegistrationView.propTypes = {
+  name: PropTypes.string,
+
+  password: PropTypes.string,
+  email: PropTypes.string,
+  birthdate: PropTypes.instanceOf(Date),
+};
 
 let mapStateToProps = (state) => {
   return {
