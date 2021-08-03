@@ -1,7 +1,7 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { Row, Col } from 'react-bootstrap';
+
+import PropTypes from 'prop-types';
+import { Row, Col, Button, Card } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
@@ -46,3 +46,24 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+MovieView.propTypes = {
+  onBackClick: PropTypes.func.isRequired,
+  movie: PropTypes.shape({
+    Description: PropTypes.string.isRequired,
+    Director: PropTypes.shape({
+      Bio: PropTypes.string.isRequired,
+      Birth: PropTypes.string.isRequired,
+      Image: PropTypes.string.isRequired,
+      Name: PropTypes.string.isRequired,
+    }),
+    Featured: PropTypes.bool.isRequired,
+    Genre: PropTypes.shape({
+      Description: PropTypes.string.isRequired,
+      Name: PropTypes.string.isRequired,
+    }),
+    ImagePath: PropTypes.string.isRequired,
+    Title: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+  }),
+};
