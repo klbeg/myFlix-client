@@ -35,11 +35,18 @@ class MainView extends React.Component {
   //  set props.user & this.props.token to logged in user
   //  call getMovies and pass access token
   componentDidMount() {
-    this.props.setToken(localStorage.getItem('token'));
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.props.setUser(JSON.parse(localStorage.getItem('user'))),
-        this.getMovies(accessToken);
+    if (!this.props) {
+      return;
+    } else {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.props.setToken(token);
+        let accessToken = token;
+        if (accessToken !== null) {
+          this.props.setUser(JSON.parse(localStorage.getItem('user'))),
+            this.getMovies(accessToken);
+        }
+      }
     }
   }
 
