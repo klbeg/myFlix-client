@@ -2,6 +2,7 @@ import React, { useState, Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import PropTypes from 'prop-types';
 import { setLoginUser, setLoginPass } from '../../actions/actions.js';
 
 import { host } from '../../config';
@@ -70,6 +71,11 @@ export function LoginView(props) {
     </Card.Body>
   );
 }
+
+LoginView.propTypes = {
+  username: PropTypes.string,
+  password: PropTypes.string,
+};
 
 let mapStateToProps = (state) => {
   return {

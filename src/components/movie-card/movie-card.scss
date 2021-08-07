@@ -1,8 +1,8 @@
-@use '../../index.scss';
+@use '../../themes.scss';
 
 .card-container {
   margin: 10px 0px;
-  border: 1px solid index.$color1 !important;
+  border: 1px solid themes.$color1 !important;
   border-radius: 5px;
-  box-shadow: 4px 4px 5px index.$color1-shadow;
+  box-shadow: 4px 4px 5px themes.$color1-shadow;
 }

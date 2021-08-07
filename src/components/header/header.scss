@@ -1,10 +1,10 @@
-@use '../../index.scss';
+@use '../../themes.scss';
 
 .header-element {
   z-index: 5;
-  color: index.$color4;
-  text-shadow: 0 2px 2px index.$color3-shadow;
-  background-color: index.$color1;
+  color: themes.$color4;
+  text-shadow: 0 2px 2px themes.$color3-shadow;
+  background-color: themes.$color1;
   width: 100%;
-  box-shadow: 0 4px 5px index.$color1-shadow;
+  box-shadow: 0 4px 5px themes.$color1-shadow;
 }

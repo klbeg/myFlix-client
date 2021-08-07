@@ -1,10 +1,10 @@
-@use '../../index.scss';
+@use '../../themes.scss';
 
 .deleted-favorite {
   display: none;
 }
 
 .user-info {
-  color: index.$color5;
-  background-color: index.$color2;
+  color: themes.$color5;
+  background-color: themes.$color2;
 }

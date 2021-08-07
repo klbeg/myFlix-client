@@ -1,7 +1,7 @@
-@use '../../index.scss';
+@use '../../themes.scss';
 
 .form-label {
-  color: index.$color5;
+  color: themes.$color5;
 }
 
 .register-link-label {

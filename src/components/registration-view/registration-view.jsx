@@ -189,9 +189,9 @@ export default connect(mapStateToProps, {
 })(RegistrationView);
 
 RegistrationView.propTypes = {
-  name: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  username: PropTypes.string,
+  password: PropTypes.string,
+  email: PropTypes.string,
   birthdate: PropTypes.instanceOf(Date),
 };
