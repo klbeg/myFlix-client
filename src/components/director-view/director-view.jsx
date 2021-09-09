@@ -12,14 +12,14 @@ export class DirectorView extends React.Component {
 
     return (
       <Card className="basic-component-background movie-view-container p-3">
-        <div className="d-flex">
+        <div className="d-flex justify-content-center">
           <Card.Img
             variant="left"
             className="movie-image img-fluid col-md-4 basic-card-styling"
             src={director.Image}
           />
 
-          <Card.Body>
+          <Card.Body className="col-sm-10 col-md-6">
             <h2>{director.Name}</h2>
             <Card.Text>{director.Bio}</Card.Text>
             <Button
