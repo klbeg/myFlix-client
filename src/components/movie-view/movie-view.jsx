@@ -13,14 +13,14 @@ export class MovieView extends React.Component {
 
     return (
       <Card className="basic-component-background movie-view-container p-3">
-        <div className="d-flex">
+        <div className="d-flex justify-content-center">
           <Card.Img
             variant="left"
             className="movie-image img-fluid col-md-4 basic-card-styling"
             src={movie.ImagePath}
           />
 
-          <Card.Body className="basic-card-styling">
+          <Card.Body className="basic-card-styling col-6 ">
             <h1>{movie.Title}</h1>
             <Card.Title>Director: {movie.Director.Name}</Card.Title>
             <Card.Title>{movie.Genre.Name}</Card.Title>
