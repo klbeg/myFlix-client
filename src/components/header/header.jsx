@@ -28,7 +28,7 @@ export class Header extends Component {
           </Col>
           <Col md={4}>{/* for use in eventual nav bar */}</Col>
           <Col md={4} className="d-flex flex-column justify-content-end">
-            <h3 className="d-flex justify-content-center">
+            <h3 className="header-username justify-content-center">
               Welcome {!user ? '' : user.Username}
             </h3>
             <div className="d-flex justify-content-center">
