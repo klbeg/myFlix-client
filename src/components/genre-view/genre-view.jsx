@@ -10,18 +10,10 @@ export class GenreView extends React.Component {
     const { genre, onBackClick } = this.props;
     return (
       <Card className="basic-component-background movie-view-container p-3">
-        <div className="d-flex">
-          {/*}
-          <Card.Img
-            variant="left"
-            className="movie-image img-fluid col-md-4 basic-card-styling"
-            src={movie.ImagePath}
-          />
-          {*/}
-          <Card.Body>
+        <div className="d-flex justify-content-center">
+          <Card.Body className="col-10">
             <h2>{genre.Name}</h2>
-            <Card.Title>{genre.Description}</Card.Title>
-
+            <Card.Text>{genre.Description}</Card.Text>
             <Button
               type="button"
               onClick={() => {
