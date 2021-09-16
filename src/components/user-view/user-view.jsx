@@ -267,7 +267,7 @@ class UserView extends React.Component {
                   Save Password
                 </Button>
               </Col>
-              <Col>
+              {/* <Col>
                 <Button
                   type="button"
                   onClick={() => {
@@ -276,7 +276,7 @@ class UserView extends React.Component {
                 >
                   Back
                 </Button>
-              </Col>
+              </Col> */}
             </Card.Body>
           </Col>
         </Row>

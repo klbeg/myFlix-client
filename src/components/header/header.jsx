@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { Row, Button, Col, Card, Container } from 'react-bootstrap';
-
-//import { Link } from 'react-router-dom';
-//import { UserView } from '../user-view/user-view';
+import { Row, Button, Col, Container } from 'react-bootstrap';
 
 import './header.scss';
+
+import { Navbar } from '../navbar/navbar.js';
 
 export class Header extends Component {
   constructor(props) {
@@ -26,8 +24,35 @@ export class Header extends Component {
           >
             <h1>Movie Craze</h1>
           </Col>
-          <Col md={4}>{/* for use in eventual nav bar */}</Col>
-          <Col md={4} className="d-flex flex-column justify-content-end">
+          <Col md={2} />
+          {this.props.user ? (
+            <Col md={6} className="d-flex justify-content-end">
+              <Navbar user={this.props.user} onLogOut={this.props.onLogOut} />
+            </Col>
+          ) : (
+            <div />
+          )}
+        </Row>
+      </Container>
+    );
+  }
+}
+
+Header.propTypes = {
+  onLogOut: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    Birthdate: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.array.isRequired,
+    Name: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Username: PropTypes.string.isRequired,
+  }),
+};
+
+/*
+inserted after Navbar in the event I can't get navbar working
+<Col md={4} className="d-flex flex-column justify-content-end">
             <h3 className="header-username justify-content-center">
               Welcome {!user ? '' : user.Username}
             </h3>
@@ -54,20 +79,4 @@ export class Header extends Component {
               )}
             </div>
           </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
-
-Header.propTypes = {
-  onLogOut: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    Birthdate: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    FavoriteMovies: PropTypes.array.isRequired,
-    Name: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired,
-    Username: PropTypes.string.isRequired,
-  }),
-};
+*/
