@@ -8,7 +8,7 @@ import { MovieCard } from '../movie-card/movie-card';
 import { Row, Col } from 'react-bootstrap';
 
 function MoviesList(props) {
-  const { movies, visibilityFilter } = props;
+  const { movies, visibilityFilter, user } = props;
   let filteredMovies = movies;
 
   if (visibilityFilter !== '') {
@@ -30,7 +30,7 @@ function MoviesList(props) {
       <Row>
         {filteredMovies.map((m) => (
           <Col lg={4} md={6} sm={12} key={m._id}>
-            <MovieCard movie={m} />
+            <MovieCard movie={m} user={user} />
           </Col>
         ))}
         ;

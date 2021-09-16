@@ -2,10 +2,12 @@
   "name": "myflix-client",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel src/index.html"
+    "start": "npm run clean && parcel src/index.html",
+    "clean": "rm -rf dist/*",
+    "build": "npm run clean && parcel build src/index.html",
+    "deploy": "npm run build && cp netlify.toml dist && netlify deploy --prod"
   },
   "author": "",
   "license": "ISC",

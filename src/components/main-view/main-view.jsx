@@ -6,7 +6,6 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
-import { match } from 'micromatch';
 
 import {
   setMovies,
@@ -127,7 +126,7 @@ class MainView extends React.Component {
               //  if movies = null, show main-view while they load
               if (movies.length === 0) return <div className="main-view" />;
               //  map movies and return each movie as a 3 col wide MovieCard
-              return <MoviesList movies={movies} />;
+              return <MoviesList user={user} movies={movies} />;
             }}
           />
 

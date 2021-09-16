@@ -1,4 +1,3 @@
-import { action } from 'commander';
 import { combineReducers } from 'redux';
 
 import {

@@ -152,34 +152,7 @@ class UserView extends React.Component {
     this.props.setDisableUpdatePassword('disabled');
   }
 
-  //  deletefavoritemovies
-  onDeleteFavorite(movie, user) {
-    alert(
-      `${movie.Title} was deleted from ${user.Username}'s favorite movies.`
-    );
-    axios
-      .delete(host + `/users/${user}/movies/${movie}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` },
-      })
-      .then((response) => {
-        let favArr = [];
-        response.data.map((favID) => {
-          this.props.movies.map((m) => {
-            if (m._id === favID) {
-              favArr.push(m);
-            }
-          });
-        });
-        let favMovTemp = [];
-        favArr.map((favMovie) => {
-          let favMovArr = Object.entries(favMovie);
-          favMovArr.push(['deleted', false]);
-          favMovie = Object.fromEntries(favMovArr);
-          favMovTemp.push(favMovie);
-        });
-        this.props.setFavMovies(favMovTemp);
-      });
-  }
+  //  onDeleteFavorite used to be here
 
   onDeleteAccount(username) {
     axios.delete(host + `/users/${username}`, {
@@ -318,18 +291,7 @@ class UserView extends React.Component {
                 key={favMovie._id}
                 className={favMovie.deleted ? 'deleted-favorite' : ''}
               >
-                <MovieCard movie={favMovie} />
-                <Button
-                  type="button"
-                  onClick={() =>
-                    this.onDeleteFavorite(
-                      favMovie._id,
-                      this.props.user.Username
-                    )
-                  }
-                >
-                  Delete Favorite
-                </Button>
+                <MovieCard movie={favMovie} user={this.props.user} />
               </Col>
             );
           })}

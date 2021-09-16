@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import FavoriteButton from '../favorite-button/favorite-button';
+
 import './movie-card.scss';
 
 import { Link } from 'react-router-dom';
 
 export class MovieCard extends Component {
   render() {
-    const { movie } = this.props;
+    const { movie, user } = this.props;
 
     return (
       <Card className="card-container">
@@ -21,6 +23,7 @@ export class MovieCard extends Component {
             <Link to={`/movies/${movie._id}`}>
               <Button variant="primary">Details</Button>
             </Link>
+            <FavoriteButton movie={movie} user={user} />
           </Card.Body>
         </div>
       </Card>
