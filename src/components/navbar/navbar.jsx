@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Row, Container, Navbar, Nav } from 'react-bootstrap';
 
 export class Navbar extends Component {
   render() {

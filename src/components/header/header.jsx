@@ -5,7 +5,7 @@ import { Row, Button, Col, Container } from 'react-bootstrap';
 
 import './header.scss';
 
-import { Navbar } from '../navbar/navbar.js';
+import { Navbar } from '../navbar/navbar';
 
 export class Header extends Component {
   constructor(props) {
