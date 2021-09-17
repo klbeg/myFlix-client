@@ -173,7 +173,7 @@ class UserView extends React.Component {
           <Col className="p-0">
             <Card.Body className="basic-component-background">
               <h1>User Info:</h1>
-              <Form className="col-md-5">
+              <Form className="col-md-6">
                 <Form.Label>Name:</Form.Label>
                 <Form.Control
                   name="Name"
@@ -227,7 +227,7 @@ class UserView extends React.Component {
                   Delete Account
                 </Button>
               </Col>
-              <Form className="col-md-5">
+              <Form className="col-md-6">
                 <Form.Label>Change Password:</Form.Label>
                 <Form.Control
                   name="Password"
@@ -267,16 +267,6 @@ class UserView extends React.Component {
                   Save Password
                 </Button>
               </Col>
-              {/* <Col>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    onBackClick(null);
-                  }}
-                >
-                  Back
-                </Button>
-              </Col> */}
             </Card.Body>
           </Col>
         </Row>
