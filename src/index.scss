@@ -63,6 +63,9 @@ body {
   .movie-image {
     display: none;
   }
+  .movie-card-container {
+    margin: 0 30px;
+  }
   .navbar-container {
     border-top: 0.5px solid themes.$color4-shadow;
     padding-top: 3px;
