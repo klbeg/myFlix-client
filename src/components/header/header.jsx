@@ -26,7 +26,7 @@ export class Header extends Component {
           </Col>
           <Col md={2} />
           {this.props.user ? (
-            <Col md={6} className="d-flex justify-content-end">
+            <Col md={6} className="d-flex align-items-center">
               <Navbar user={this.props.user} onLogOut={this.props.onLogOut} />
             </Col>
           ) : (

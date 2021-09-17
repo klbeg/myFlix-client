@@ -46,12 +46,28 @@ body {
   border: 1px solid themes.$color1 !important;
   margin: 0 1px !important;
 }
+.navbar-container {
+  justify-content: end;
+  align-items: center;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0 !important;
+  font-size: 18px !important;
+  color: themes.$color4 !important;
+}
 
 @media screen and (max-width: 767px) {
   .movie-image {
     display: none;
   }
-  .header-username {
-    display: none;
+  .navbar-container {
+    border-top: 0.5px solid themes.$color4-shadow;
+    padding-top: 3px;
+    margin-top: 3px;
+    justify-content: center;
+    align-items: flex-end;
   }
 }

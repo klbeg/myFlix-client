@@ -7,13 +7,20 @@ export class Navbar extends Component {
     const { user, onLogOut } = this.props;
     return (
       <Container>
-        <Nav>
+        <Nav className="d-flex navbar-container">
           <Row>
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href={`/users/${this.props.user.Username}`}>
+            <Nav.Link href="/" className="nav-item">
+              Home
+            </Nav.Link>
+            <Nav.Link
+              href={`/users/${this.props.user.Username}`}
+              className="nav-item"
+            >
               User Details
             </Nav.Link>
-            <Nav.Link onClick={this.props.onLogOut}>Log Out</Nav.Link>
+            <Nav.Link onClick={this.props.onLogOut} className="nav-item">
+              Log Out
+            </Nav.Link>
           </Row>
         </Nav>
       </Container>
