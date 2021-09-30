@@ -21,7 +21,14 @@ class FavoriteButton extends Component {
         headers: { Authorization: `Bearer ${this.props.token}` },
       })
       .then((response) => {
-        let favArr = [];
+        this.props.setFavMovies(response.data);
+      });
+  }
+
+  /*
+//  add at line 24
+
+let favArr = [];
         response.data.map((favID) => {
           this.props.movies.map((m) => {
             if (m._id === favID) {
@@ -37,11 +44,9 @@ class FavoriteButton extends Component {
           favMovTemp.push(favMovie);
         });
         this.props.setFavMovies(favMovTemp);
-      });
-  }
+*/
 
   onAddFavorite(movie, user) {
-    console.log('request: ', `/users/${user.Username}/movies/${movie._id}`);
     alert(`${movie.Title} was added to ${user.Username}'s favorite movies.`);
     axios
       .put(
@@ -52,23 +57,7 @@ class FavoriteButton extends Component {
         }
       )
       .then((response) => {
-        console.log('reasonse: ', response);
-        let favArr = [];
-        response.data.map((favID) => {
-          this.props.movies.map((m) => {
-            if (m._id === favID) {
-              favArr.push(m);
-            }
-          });
-        });
-        let favMovTemp = [];
-        favArr.map((favMovie) => {
-          let favMovArr = Object.entries(favMovie);
-          favMovArr.push(['deleted', false]);
-          favMovie = Object.fromEntries(favMovArr);
-          favMovTemp.push(favMovie);
-        });
-        this.props.setFavMovies(favMovTemp);
+        this.props.setFavMovies(response.data);
       });
   }
 
