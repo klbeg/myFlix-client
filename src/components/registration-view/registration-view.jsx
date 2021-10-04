@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -12,10 +12,14 @@ import Button from 'react-bootstrap/Button';
 import { host } from '../../config';
 
 import './registration-view.scss';
-import { Card } from 'react-bootstrap';
+import { Card, Row } from 'react-bootstrap';
 
-export function RegistrationView(props) {
-  const { onBackClick } = props;
+class RegistrationView extends Component {
+  constructor() {
+    super();
+    const onBackClick = props;
+    this.handleUserInput = this.handleUserInput.bind(this);
+  }
 
   //  Input validation for registration form
   handleUserInput = (evt) => {
@@ -84,7 +88,7 @@ export function RegistrationView(props) {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const isValid = this.userUpdateValidation();
 
@@ -110,68 +114,69 @@ export function RegistrationView(props) {
         });
     }
   };
-
-  return (
-    <Card.Body className="registration-view-container basic-card-styling p-3">
-      <div className="col-md-5 col-xsm-12">
-        <Form>
-          <Form.Group controlId="formName">
-            <Form.Label>Name:</Form.Label>
-            <Form.Control
-              name="Name"
-              type="text"
-              onChange={this.handleUserInput}
-            />
-          </Form.Group>
-          <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
-            <Form.Control
-              name="Username"
-              type="text"
-              onChange={this.handleUserInput}
-            />
-          </Form.Group>
-          <Form.Group controlId="formPassword">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
-              name="Password"
-              type="text"
-              onChange={this.handleUserInput}
-            />
-          </Form.Group>
-          <Form.Group controlId="formEmail">
-            <Form.Label>Email:</Form.Label>
-            <Form.Control
-              name="Email"
-              type="text"
-              onChange={this.handleUserInput}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBirthdate">
-            <Form.Label>Birthdate</Form.Label>
-            <Form.Control
-              name="Birthdate"
-              type="date"
-              onChange={this.handleUserInput}
-            />
-          </Form.Group>
-          {Object.values(props.errors).map((value) => {
-            return (
-              <div className="display-errors" key={value}>
-                {value}
-              </div>
-            );
-          })}
-          <Button type="submit" onClick={handleSubmit}>
-            Submit
-          </Button>
-          <Link className="btn btn-primary" to={`/`}>
-            Back
-          </Link>
-        </Form>
-      </div>
-    </Card.Body>
-  );
+  render() {
+    return (
+      <Card.Body className="registration-view-container basic-card-styling p-3">
+        <div className="col-md-5 col-xsm-12">
+          <Form>
+            <Form.Group controlId="formName">
+              <Form.Label>Name:</Form.Label>
+              <Form.Control
+                name="Name"
+                type="text"
+                onChange={this.handleUserInput}
+              />
+            </Form.Group>
+            <Form.Group controlId="formUsername">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                name="Username"
+                type="text"
+                onChange={this.handleUserInput}
+              />
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                name="Password"
+                type="text"
+                onChange={this.handleUserInput}
+              />
+            </Form.Group>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                name="Email"
+                type="text"
+                onChange={this.handleUserInput}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBirthdate">
+              <Form.Label>Birthdate</Form.Label>
+              <Form.Control
+                name="Birthdate"
+                type="date"
+                onChange={this.handleUserInput}
+              />
+            </Form.Group>
+            {Object.values(props.errors).map((value) => {
+              return (
+                <div className="display-errors" key={value}>
+                  {value}
+                </div>
+              );
+            })}
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Link className="btn btn-primary" to={`/`}>
+              Back
+            </Link>
+          </Form>
+        </div>
+      </Card.Body>
+    );
+  }
 }
 
 let mapStateToProps = (state) => {
