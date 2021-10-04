@@ -17,13 +17,6 @@ import { Card } from 'react-bootstrap';
 export function RegistrationView(props) {
   const { onBackClick } = props;
 
-  //  Input validation for registration form
-  handleUserInput = (evt) => {
-    props.setNewUser({
-      [evt.target.name]: evt.target.value,
-    });
-  };
-
   userUpdateValidation = () => {
     console.log('userUpdateValidation being called');
 
@@ -82,6 +75,13 @@ export function RegistrationView(props) {
 
     props.setErrors(errors);
     return isValid;
+  };
+
+  //  Input validation for registration form
+  handleUserInput = (evt) => {
+    props.setNewUser({
+      [evt.target.name]: evt.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
