@@ -166,7 +166,7 @@ class RegistrationView extends Component {
                 </div>
               );
             })}
-            <Button type="submit" onClick={this.props.handleSubmit}>
+            <Button type="submit" onClick={this.handleSubmit}>
               Submit
             </Button>
             <Link className="btn btn-primary" to={`/`}>
