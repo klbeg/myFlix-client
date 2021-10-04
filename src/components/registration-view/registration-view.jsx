@@ -17,7 +17,8 @@ import { Card, Row } from 'react-bootstrap';
 class RegistrationView extends Component {
   constructor() {
     super();
-    const onBackClick = props;
+    const onBackClick = this.props;
+    let updateToggle = false;
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
@@ -28,11 +29,13 @@ class RegistrationView extends Component {
     });
   };
 
-  userUpdateValidation = () => {
-    console.log('userUpdateValidation being called');
+  componentDidUpdate() {
+    console.log('registration view updated');
+  }
 
+  userUpdateValidation = () => {
     let isValid = true;
-    const errors = this.props.errors;
+    let errors = this.props.errors;
     let name = this.props.newUser.Name;
     let username = this.props.newUser.Username;
     let password = this.props.newUser.Password;
@@ -91,6 +94,9 @@ class RegistrationView extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const isValid = this.userUpdateValidation();
+    this.setState({
+      updateToggle: true,
+    });
 
     if (isValid) {
       axios
@@ -113,6 +119,9 @@ class RegistrationView extends Component {
           console.log('The following error occured: ' + e);
         });
     }
+    this.setState({
+      updateToggle: false,
+    });
   };
   render() {
     return (
