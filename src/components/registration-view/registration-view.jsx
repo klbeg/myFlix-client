@@ -23,7 +23,7 @@ class RegistrationView extends Component {
 
   //  Input validation for registration form
   handleUserInput = (evt) => {
-    props.setNewUser({
+    this.props.setNewUser({
       [evt.target.name]: evt.target.value,
     });
   };
@@ -33,11 +33,11 @@ class RegistrationView extends Component {
 
     let isValid = true;
     const errors = this.props.errors;
-    let name = props.newUser.Name;
-    let username = props.newUser.Username;
-    let password = props.newUser.Password;
-    let email = props.newUser.Email;
-    let birthdate = props.newUser.Birthdate;
+    let name = this.props.newUser.Name;
+    let username = this.props.newUser.Username;
+    let password = this.props.newUser.Password;
+    let email = this.props.newUser.Email;
+    let birthdate = this.props.newUser.Birthdate;
 
     if (!name) {
       errors.nameIsRequired = 'Name is a required field';
@@ -84,7 +84,7 @@ class RegistrationView extends Component {
       isValid = false;
     }
 
-    props.setErrors(errors);
+    this.props.setErrors(errors);
     return isValid;
   };
 
@@ -95,17 +95,17 @@ class RegistrationView extends Component {
     if (isValid) {
       axios
         .post(host + '/users', {
-          Name: props.newUser.Name,
-          Username: props.newUser.Username,
-          Password: props.newUser.Password,
-          Email: props.newUser.Email,
-          Birthdate: props.newUser.Birthdate,
+          Name: this.props.newUser.Name,
+          Username: this.props.newUser.Username,
+          Password: this.props.newUser.Password,
+          Email: this.props.newUser.Email,
+          Birthdate: this.props.newUser.Birthdate,
         })
         .then((response) => {
           const data = response.data;
           console.log(data);
           alert(
-            `Welcome ${props.newUser.Username}.  Your account has been created, please log in.`
+            `Welcome ${this.props.newUser.Username}.  Your account has been created, please log in.`
           );
           window.open('/', '_self');
         })
