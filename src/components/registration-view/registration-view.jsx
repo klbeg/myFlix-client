@@ -32,7 +32,7 @@ class RegistrationView extends Component {
     console.log('userUpdateValidation being called');
 
     let isValid = true;
-    const errors = {};
+    const errors = this.props.errors;
     let name = props.newUser.Name;
     let username = props.newUser.Username;
     let password = props.newUser.Password;
@@ -159,14 +159,14 @@ class RegistrationView extends Component {
                 onChange={this.handleUserInput}
               />
             </Form.Group>
-            {Object.values(props.errors).map((value) => {
+            {Object.values(this.props.errors).map((value) => {
               return (
                 <div className="display-errors" key={value}>
                   {value}
                 </div>
               );
             })}
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" onClick={this.props.handleSubmit}>
               Submit
             </Button>
             <Link className="btn btn-primary" to={`/`}>
