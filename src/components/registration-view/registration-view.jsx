@@ -86,7 +86,7 @@ export function RegistrationView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isValid = this.userUpdateValidation();
+    const isValid = userUpdateValidation();
 
     if (isValid) {
       axios
@@ -117,18 +117,14 @@ export function RegistrationView(props) {
         <Form>
           <Form.Group controlId="formName">
             <Form.Label>Name:</Form.Label>
-            <Form.Control
-              name="Name"
-              type="text"
-              onChange={this.handleUserInput}
-            />
+            <Form.Control name="Name" type="text" onChange={handleUserInput} />
           </Form.Group>
           <Form.Group controlId="formUsername">
             <Form.Label>Username:</Form.Label>
             <Form.Control
               name="Username"
               type="text"
-              onChange={this.handleUserInput}
+              onChange={handleUserInput}
             />
           </Form.Group>
           <Form.Group controlId="formPassword">
@@ -136,23 +132,19 @@ export function RegistrationView(props) {
             <Form.Control
               name="Password"
               type="text"
-              onChange={this.handleUserInput}
+              onChange={handleUserInput}
             />
           </Form.Group>
           <Form.Group controlId="formEmail">
             <Form.Label>Email:</Form.Label>
-            <Form.Control
-              name="Email"
-              type="text"
-              onChange={this.handleUserInput}
-            />
+            <Form.Control name="Email" type="text" onChange={handleUserInput} />
           </Form.Group>
           <Form.Group controlId="formBirthdate">
             <Form.Label>Birthdate</Form.Label>
             <Form.Control
               name="Birthdate"
               type="date"
-              onChange={this.handleUserInput}
+              onChange={handleUserInput}
             />
           </Form.Group>
           {Object.values(props.errors).map((value) => {
