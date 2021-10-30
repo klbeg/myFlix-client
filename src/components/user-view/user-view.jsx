@@ -86,7 +86,7 @@ class UserView extends React.Component {
           }
         )
         .then((response) => {
-          console.log(response);
+          console.log('response: ', response);
           if (response.statusText === 'OK') {
             this.setState({
               birthdate: response.data.Birthdate,
