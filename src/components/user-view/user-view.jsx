@@ -42,7 +42,7 @@ class UserView extends React.Component {
     });
   }
 
-  //  Input validation for update user form
+  //  Input validation for user update form
   userUpdateValidation() {
     let name = this.props.changeUser.Name;
     let email = this.props.changeUser.Email;
