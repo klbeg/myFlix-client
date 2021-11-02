@@ -25,27 +25,6 @@ class FavoriteButton extends Component {
       });
   }
 
-  /*
-//  add at line 24
-
-let favArr = [];
-        response.data.map((favID) => {
-          this.props.movies.map((m) => {
-            if (m._id === favID) {
-              favArr.push(m);
-            }
-          });
-        });
-        let favMovTemp = [];
-        favArr.map((favMovie) => {
-          let favMovArr = Object.entries(favMovie);
-          favMovArr.push(['deleted', false]);
-          favMovie = Object.fromEntries(favMovArr);
-          favMovTemp.push(favMovie);
-        });
-        this.props.setFavMovies(favMovTemp);
-*/
-
   onAddFavorite(movie, user) {
     alert(`${movie.Title} was added to ${user.Username}'s favorite movies.`);
     axios
@@ -58,6 +37,9 @@ let favArr = [];
       )
       .then((response) => {
         this.props.setFavMovies(response.data);
+        this.setState({
+          pendingChanges: true,
+        });
       });
   }
 

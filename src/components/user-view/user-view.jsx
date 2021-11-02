@@ -88,9 +88,10 @@ class UserView extends React.Component {
         .then((response) => {
           console.log('response.data: ', response.data);
           if (response.statusText === 'OK') {
-            // this.setState({
-            //   birthdate: response.data.Birthdate,
-            // });
+            this.props.setUser(response.data);
+            this.setState({
+              pendingChanges: true,
+            });
           }
         })
         .catch((e) => {
